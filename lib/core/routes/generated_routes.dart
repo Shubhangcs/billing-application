@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_billing/features/authentication/bloc/auth_bloc.dart';
 import 'package:new_billing/features/authentication/pages/login.dart';
 import 'package:new_billing/features/authentication/pages/register.dart';
 import 'package:new_billing/features/billing/pages/billing_page.dart';
+import 'package:new_billing/features/billing/pages/product_page.dart';
+import 'package:new_billing/features/history/pages/history_page.dart';
 import 'package:new_billing/features/home/pages/home.dart';
+import 'package:new_billing/features/new_customer/pages/customer_page.dart';
+import 'package:new_billing/features/new_shipper/pages/shipper_page.dart';
 
 class Routes {
   static Route? onGenerate(RouteSettings settings) {
     switch (settings.name) {
       case "/login":
         return MaterialPageRoute(
-          builder: (context) => LoginPage(),
+          builder: (context) => BlocProvider(
+            create: (context) => AuthBloc(),
+            child: LoginPage(),
+          ),
         );
 
       case "/register":
         return MaterialPageRoute(
-          builder: (context) => RegisterPage(),
+          builder: (context) => BlocProvider(
+            create: (context) => AuthBloc(),
+            child: RegisterPage(),
+          ),
         );
 
       case "/home":
@@ -25,6 +37,26 @@ class Routes {
       case "/billing":
         return MaterialPageRoute(
           builder: (context) => BillingPage(),
+        );
+
+      case "/products":
+        return MaterialPageRoute(
+          builder: (context) => ProductPage(),
+        );
+
+      case "/history":
+        return MaterialPageRoute(
+          builder: (context) => HistoryPage(),
+        );
+
+      case "/customer":
+        return MaterialPageRoute(
+          builder: (context) => CustomerPage(),
+        );
+
+      case "/shipper":
+        return MaterialPageRoute(
+          builder: (context) => ShipperPage(),
         );
 
       default:

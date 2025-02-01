@@ -44,6 +44,7 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
+        elevation: WidgetStatePropertyAll(0),
         backgroundColor: WidgetStatePropertyAll(AppColors.blue),
         textStyle: WidgetStatePropertyAll(
           GoogleFonts.poppins(

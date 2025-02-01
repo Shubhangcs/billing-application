@@ -5,7 +5,8 @@ import 'package:new_billing/core/themes/colors.dart';
 class CustomElevatedButton extends StatelessWidget {
   final String buttonText;
   final VoidCallback onPressed;
-  const CustomElevatedButton({super.key , required this.buttonText , required this.onPressed});
+  final bool isLoading;
+  const CustomElevatedButton({super.key , required this.buttonText , required this.onPressed , this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class CustomElevatedButton extends StatelessWidget {
         ),
       ),
       onPressed: onPressed,
-      child: Text(
+      child:isLoading? SizedBox(width: 30 , height: 30,child: CircularProgressIndicator(color: AppColors.white,strokeCap: StrokeCap.round,)): Text(
         buttonText,
         style: GoogleFonts.poppins(
           color: AppColors.white,

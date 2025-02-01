@@ -23,26 +23,35 @@ class _HomePageState extends State<HomePage> {
             children: [
               Image.asset(
                 "assets/logo.png",
-                width: 360,
+                width: 200,
+              ),
+              SizedBox(
+                height: 20,
               ),
               ServicesCard(
                 cardTitle: "Generate Invoice",
                 leading: Icons.receipt_long_outlined,
                 trailing: Icons.arrow_outward_rounded,
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               ServicesCard(
                 cardTitle: "Invoice History",
                 leading: Icons.history,
                 trailing: Icons.arrow_outward_rounded,
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               ServicesCard(
                 cardTitle: "Add New Customer",
                 leading: Icons.group_add_sharp,
                 trailing: Icons.arrow_outward_rounded,
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               ServicesCard(
                 cardTitle: "Add New Shipper",
                 leading: Icons.person_3_rounded,
