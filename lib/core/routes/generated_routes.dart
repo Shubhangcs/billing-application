@@ -7,7 +7,9 @@ import 'package:new_billing/features/billing/pages/billing_page.dart';
 import 'package:new_billing/features/billing/pages/product_page.dart';
 import 'package:new_billing/features/history/pages/history_page.dart';
 import 'package:new_billing/features/home/pages/home.dart';
+import 'package:new_billing/features/new_customer/bloc/customer_bloc.dart';
 import 'package:new_billing/features/new_customer/pages/customer_page.dart';
+import 'package:new_billing/features/new_shipper/bloc/shipper_bloc.dart';
 import 'package:new_billing/features/new_shipper/pages/shipper_page.dart';
 
 class Routes {
@@ -51,12 +53,18 @@ class Routes {
 
       case "/customer":
         return MaterialPageRoute(
-          builder: (context) => CustomerPage(),
+          builder: (context) => BlocProvider(
+            create: (context) => CustomerBloc(),
+            child: CustomerPage(),
+          ),
         );
 
       case "/shipper":
         return MaterialPageRoute(
-          builder: (context) => ShipperPage(),
+          builder: (context) => BlocProvider(
+            create: (context) => ShipperBloc(),
+            child: ShipperPage(),
+          ),
         );
 
       default:

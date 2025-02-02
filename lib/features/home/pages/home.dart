@@ -44,18 +44,28 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 20,
               ),
-              ServicesCard(
-                cardTitle: "Add New Customer",
-                leading: Icons.group_add_sharp,
-                trailing: Icons.arrow_outward_rounded,
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, "/customer");
+                },
+                child: ServicesCard(
+                  cardTitle: "Add New Customer",
+                  leading: Icons.group_add_sharp,
+                  trailing: Icons.arrow_outward_rounded,
+                ),
               ),
               SizedBox(
                 height: 20,
               ),
-              ServicesCard(
-                cardTitle: "Add New Shipper",
-                leading: Icons.person_3_rounded,
-                trailing: Icons.arrow_outward_rounded,
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, "/shipper");
+                },
+                child: ServicesCard(
+                  cardTitle: "Add New Shipper",
+                  leading: Icons.person_3_rounded,
+                  trailing: Icons.arrow_outward_rounded,
+                ),
               ),
             ],
           ),

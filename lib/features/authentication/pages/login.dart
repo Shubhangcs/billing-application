@@ -128,12 +128,17 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           width: 3,
                         ),
-                        Text(
-                          "Register",
-                          style: GoogleFonts.poppins(
-                            color: AppColors.blue,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.pushReplacementNamed(context, "/register");
+                          },
+                          child: Text(
+                            "Register",
+                            style: GoogleFonts.poppins(
+                              color: AppColors.blue,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ],
