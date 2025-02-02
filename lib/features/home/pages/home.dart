@@ -36,10 +36,15 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 20,
               ),
-              ServicesCard(
-                cardTitle: "Invoice History",
-                leading: Icons.history,
-                trailing: Icons.arrow_outward_rounded,
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, "/history");
+                },
+                child: ServicesCard(
+                  cardTitle: "Invoice History",
+                  leading: Icons.history,
+                  trailing: Icons.arrow_outward_rounded,
+                ),
               ),
               SizedBox(
                 height: 20,

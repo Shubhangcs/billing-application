@@ -8,7 +8,7 @@ final class HistoryInitial extends HistoryState {}
 final class FetchInvoicesLoadingState extends HistoryState{}
 
 final class FetchInvoiceHistorySuccessState extends HistoryState{
-  final List<Map<String , dynamic>> ? invoices;
+  final List<dynamic> ? invoices;
   FetchInvoiceHistorySuccessState({required this.invoices});
 }
 

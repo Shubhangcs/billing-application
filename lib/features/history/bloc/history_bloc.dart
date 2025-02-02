@@ -28,6 +28,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
         headers: {"Content-Type": "application/json"},
       );
       final response = jsonDecode(jsonResponse.body);
+      print(response);
       if(jsonResponse.statusCode != 200){
         emit(FetchInvoiceHistoryFailedState(message: response["message"]));
         return;

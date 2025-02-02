@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:new_billing/core/common/widgets/app_bar.dart';
 import 'package:new_billing/core/themes/colors.dart';
 import 'package:new_billing/features/history/bloc/history_bloc.dart';
+import 'package:new_billing/features/pdf_viev/page/pdf_view_page.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -35,7 +36,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       onTap: (){
-                        
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => PDFScreen(pdfUrl: "http://apmc.api.vsensetech.in/download/invoice/${state.invoices![index]["invoice_id"]}")));
                       },
                       leading: Icon(Icons.receipt),
                       title: Text(state.invoices![index]["name"]),
@@ -51,11 +52,13 @@ class _HistoryPageState extends State<HistoryPage> {
                       ),
                     );
                   },
-                  itemCount: 10,
+                  itemCount: state.invoices!.length,
                 );
               } else {
                 return Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.not_interested_rounded,
@@ -92,9 +95,11 @@ class _HistoryPageState extends State<HistoryPage> {
                 ),
               );
             }
-            return CircularProgressIndicator(
-              color: AppColors.blue,
-              strokeCap: StrokeCap.round,
+            return Center(
+              child: CircularProgressIndicator(
+                color: AppColors.blue,
+                strokeCap: StrokeCap.round,
+              ),
             );
           },
         ),
