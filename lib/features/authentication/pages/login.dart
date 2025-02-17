@@ -31,123 +31,119 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if(state is AuthSuccessState){
+        if (state is AuthSuccessState) {
           Navigator.pushReplacementNamed(context, "/home");
+          return;
         }
-        if(state is AuthFailureState){
+        if (state is AuthFailureState) {
           CustomSnackbar.snackbarShow(context, state.message);
         }
       },
       child: Scaffold(
         appBar: CustomAppBar().build(context),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          physics: NeverScrollableScrollPhysics(),
-          child: SizedBox(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    StyledIcon(
-                      icon: Icons.lock,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Login",
-                      style: GoogleFonts.poppins(
-                        color: AppColors.black,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    CustomTextField(
-                      labelText: "Email",
-                      controller: _emailController,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextField(
-                      labelText: "Password",
-                      controller: _passwordController,
-                      obscureText: true,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Align(
-                      alignment: Alignment(1, 0),
-                      child: Text(
-                        "Forgot Password?",
-                        style: GoogleFonts.poppins(
-                          color: AppColors.blue,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    BlocBuilder<AuthBloc, AuthState>(
-                      builder: (context, state) {
-                        return CustomElevatedButton(
-                          isLoading: state is AuthLoadingState,
-                          buttonText: "Login",
-                          onPressed: () {
-                            context.read<AuthBloc>().add(
-                                  AuthLoginEvent(
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: IntrinsicHeight(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                StyledIcon(
+                                  icon: Icons.lock,
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  "Login",
+                                  style: GoogleFonts.poppins(
+                                    color: AppColors.black,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                );
-                          },
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account?",
-                          style: GoogleFonts.poppins(
-                            color: AppColors.black,
-                            fontSize: 14,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 3,
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.pushReplacementNamed(context, "/register");
-                          },
-                          child: Text(
-                            "Register",
-                            style: GoogleFonts.poppins(
-                              color: AppColors.blue,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
+                                ),
+                                SizedBox(height: 40),
+                                CustomTextField(
+                                  showWordCount: false,
+                                  labelText: "Email",
+                                  controller: _emailController,
+                                  maxLength: 50,
+                                ),
+                                SizedBox(height: 20),
+                                CustomTextField(
+                                  showWordCount: false,
+                                  maxLength: 20,
+                                  labelText: "Password",
+                                  controller: _passwordController,
+                                  obscureText: true,
+                                ),
+                                SizedBox(height: 20),
+                                BlocBuilder<AuthBloc, AuthState>(
+                                  builder: (context, state) {
+                                    return CustomElevatedButton(
+                                      isLoading: state is AuthLoadingState,
+                                      buttonText: "Login",
+                                      onPressed: () {
+                                        context.read<AuthBloc>().add(
+                                              AuthLoginEvent(
+                                                email: _emailController.text,
+                                                password:
+                                                    _passwordController.text,
+                                              ),
+                                            );
+                                      },
+                                    );
+                                  },
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Don't have an account?",
+                                      style: GoogleFonts.poppins(
+                                        color: AppColors.black,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    SizedBox(width: 3),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushReplacementNamed(
+                                            context, "/register");
+                                      },
+                                      child: Text(
+                                        "Register",
+                                        style: GoogleFonts.poppins(
+                                          color: AppColors.blue,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

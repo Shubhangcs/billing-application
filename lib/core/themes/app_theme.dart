@@ -15,7 +15,7 @@ class AppTheme {
   }
 
   static ThemeData lightTheme = ThemeData.light(useMaterial3: true).copyWith(
-    scaffoldBackgroundColor: AppColors.lightestGrey,
+    scaffoldBackgroundColor: AppColors.white,
     appBarTheme: AppBarTheme(
         iconTheme: IconThemeData(
           color: AppColors.blue,
@@ -27,8 +27,8 @@ class AppTheme {
           fontSize: 20,
           fontWeight: FontWeight.w600,
         ),
-        backgroundColor: AppColors.lightestGrey,
-        surfaceTintColor: AppColors.lightestGrey,
+        backgroundColor: AppColors.white,
+        surfaceTintColor: AppColors.white,
         elevation: 0,
         shadowColor: AppColors.transperent),
     inputDecorationTheme: InputDecorationTheme(

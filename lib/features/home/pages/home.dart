@@ -13,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar().build(context),
+      appBar: CustomAppBar().build(context , true),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -22,16 +22,21 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
-                "assets/logo.png",
-                width: 200,
+                "assets/hero.png",
+                width: 300,
               ),
               SizedBox(
                 height: 20,
               ),
-              ServicesCard(
-                cardTitle: "Generate Invoice",
-                leading: Icons.receipt_long_outlined,
-                trailing: Icons.arrow_outward_rounded,
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, "/billing");
+                },
+                child: ServicesCard(
+                  cardTitle: "Generate Invoice",
+                  leading: Icons.receipt_long_outlined,
+                  trailing: Icons.arrow_outward_rounded,
+                ),
               ),
               SizedBox(
                 height: 20,

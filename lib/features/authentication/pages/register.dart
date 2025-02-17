@@ -76,6 +76,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20,
                   ),
                   CustomTextField(
+                    showWordCount: false,
+                    maxLength: 20,
                     labelText: "Username",
                     controller: _userNameController,
                   ),
@@ -83,6 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20,
                   ),
                   CustomTextField(
+                    maxLength: 10,
                     labelText: "Phone",
                     controller: _phoneNumberController,
                   ),
@@ -90,6 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20,
                   ),
                   CustomTextField(
+                    maxLength: 46,
                     labelText: "Address",
                     controller: _addressController,
                   ),
@@ -97,6 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20,
                   ),
                   CustomTextField(
+                    maxLength: 15,
                     labelText: "GSTIN",
                     controller: _gstController,
                   ),
@@ -104,6 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20,
                   ),
                   CustomTextField(
+                    maxLength: 10,
                     labelText: "PAN",
                     controller: _panController,
                   ),
@@ -111,6 +117,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20,
                   ),
                   CustomTextField(
+                    showWordCount: false,
+                    maxLength: 50,
                     labelText: "Email",
                     controller: _emailController,
                   ),
@@ -118,6 +126,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20,
                   ),
                   CustomTextField(
+                    showWordCount: false,
+                    maxLength: 20,
                     labelText: "Password",
                     controller: _passwordController,
                     obscureText: true,

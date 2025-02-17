@@ -5,6 +5,7 @@ import 'package:new_billing/features/authentication/pages/login.dart';
 import 'package:new_billing/features/authentication/pages/register.dart';
 import 'package:new_billing/features/billing/bloc/invoice_bloc.dart';
 import 'package:new_billing/features/billing/bloc/invoice_details_bloc.dart';
+import 'package:new_billing/features/billing/bloc/products_bloc.dart';
 import 'package:new_billing/features/billing/pages/billing_page.dart';
 import 'package:new_billing/features/billing/pages/product_page.dart';
 import 'package:new_billing/features/history/bloc/history_bloc.dart';
@@ -56,7 +57,10 @@ class Routes {
 
       case "/products":
         return MaterialPageRoute(
-          builder: (context) => ProductPage(),
+          builder: (context) => BlocProvider(
+            create: (context) => ProductsBloc(),
+            child: ProductPage(),
+          ),
         );
 
       case "/history":

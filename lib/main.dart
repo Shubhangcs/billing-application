@@ -25,6 +25,7 @@ class BillingApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
+      title: "Billsoft",
     );
   }
 }

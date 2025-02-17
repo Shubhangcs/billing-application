@@ -35,11 +35,16 @@ class InvoiceDetailsBloc
       final reciverResponse = jsonDecode(jsonResponseRecivers.body);
       final consigneeResponse = jsonDecode(jsonResponseConsignee.body);
 
+      if(reciverResponse == null || reciverResponse["reciver_details"] == null || consigneeResponse == null || consigneeResponse["consignee_details"] == null){
+        emit(InitialInvoiceDetailsFetchFailureState(message: "No Customer or Shipper is Added."));
+      }
+
       List<Map<String, dynamic>> receiverDetails =
           List<Map<String, dynamic>>.from(reciverResponse["receiver_details"]);
       List<Map<String, dynamic>> consigneeDetails =
           List<Map<String, dynamic>>.from(
               consigneeResponse["consignee_details"]);
+              print(receiverDetails);
 
       if (jsonResponseConsignee.statusCode != 200 ||
           jsonResponseRecivers.statusCode != 200) {

@@ -9,8 +9,8 @@ final class SubmitInvoiceEvent extends InvoiceEvent{
   final String invoiceReverseCharge;
   final String invoiceState;
   final String invoiceStateCode;
-  final String invoiceChallanNo;
-  final String invoiceVehicleNo;
+  final String? invoiceChallanNo;
+  final String? invoiceVehicleNo;
   final String invoiceDateOfSupply;
   final String invoicePlaceOfSupply;
   final String customerId;

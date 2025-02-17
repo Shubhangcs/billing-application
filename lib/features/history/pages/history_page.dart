@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 import 'package:new_billing/core/common/widgets/app_bar.dart';
+import 'package:new_billing/core/constants/urls.dart';
 import 'package:new_billing/core/themes/colors.dart';
 import 'package:new_billing/features/history/bloc/history_bloc.dart';
 import 'package:new_billing/features/pdf_viev/page/pdf_view_page.dart';
@@ -22,6 +26,25 @@ class _HistoryPageState extends State<HistoryPage> {
     super.initState();
   }
 
+  Future<void> _invoiceSubmit(String invoiceId) async {
+    print(invoiceId);
+    final jsonResponse = await http.patch(
+      Uri.parse("${AppUrls.makePayment}/${invoiceId.trim()}"),
+      body: jsonEncode({"invoice_id": invoiceId}),
+      headers: {"Content-Type": "application/json"},
+    );
+    print(jsonDecode(jsonResponse.body));
+    if (jsonResponse.statusCode == 200) {
+      _fetchHistory();
+    }
+  }
+
+  _fetchHistory() {
+    context.read<HistoryBloc>().add(
+          FetchInvoiceHistoryEvent(),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +58,13 @@ class _HistoryPageState extends State<HistoryPage> {
                 return ListView.builder(
                   itemBuilder: (context, index) {
                     return ListTile(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => PDFScreen(pdfUrl: "http://apmc.api.vsensetech.in/download/invoice/${state.invoices![index]["invoice_id"]}")));
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PDFScreen(
+                                    pdfUrl:
+                                        "http://apmc.api.vsensetech.in/download/invoice/${state.invoices![index]["invoice_id"]}")));
                       },
                       leading: Icon(Icons.receipt),
                       title: Text(state.invoices![index]["name"]),
@@ -48,7 +76,9 @@ class _HistoryPageState extends State<HistoryPage> {
                                 color: Colors.green,
                               )
                             : Icon(Icons.payment),
-                        onPressed: () {},
+                        onPressed: () {
+                          _invoiceSubmit(state.invoices![index]["invoice_id"]);
+                        },
                       ),
                     );
                   },

@@ -36,7 +36,7 @@ class _BillingPageState extends State<BillingPage> {
   final TextEditingController _placeOfSupplyController =
       TextEditingController();
   final TextEditingController _vehicleNoController = TextEditingController();
-  final TextEditingController _chalanNoController = TextEditingController();
+  final TextEditingController  _chalanNoController = TextEditingController();
   final TextEditingController _reverseChargeController =
       TextEditingController();
   final TextEditingController _billedToController = TextEditingController();
@@ -60,7 +60,6 @@ class _BillingPageState extends State<BillingPage> {
 
   @override
   void dispose() {
-    _billedToController.dispose();
     _billedToController.dispose();
     _chalanNoController.dispose();
     _dateController.dispose();
@@ -131,6 +130,7 @@ class _BillingPageState extends State<BillingPage> {
                           height: 20,
                         ),
                         CustomTextField(
+                          maxLength: 46,
                           labelText: "Invoice Name",
                           controller: _invoiceNameController,
                         ),
@@ -138,6 +138,7 @@ class _BillingPageState extends State<BillingPage> {
                           height: 20,
                         ),
                         CustomTextField(
+                          maxLength: 46,
                           labelText: "Invoice State",
                           controller: _invoiceStateNameController,
                         ),
@@ -145,6 +146,7 @@ class _BillingPageState extends State<BillingPage> {
                           height: 20,
                         ),
                         CustomTextField(
+                          maxLength: 5,
                           labelText: "State Code",
                           controller: _invoiceStateCodeController,
                         ),
@@ -152,6 +154,7 @@ class _BillingPageState extends State<BillingPage> {
                           height: 20,
                         ),
                         CustomTextField(
+                          maxLength: 46,
                           readOnly: true,
                           labelText: "Date of Supply",
                           controller: _dateController,
@@ -163,6 +166,7 @@ class _BillingPageState extends State<BillingPage> {
                           height: 20,
                         ),
                         CustomTextField(
+                          maxLength: 46,
                           labelText: "Place of Supply",
                           controller: _placeOfSupplyController,
                         ),
@@ -170,6 +174,7 @@ class _BillingPageState extends State<BillingPage> {
                           height: 20,
                         ),
                         CustomTextField(
+                          maxLength: 46,
                           labelText: "Vehicle no (Optional)",
                           controller: _vehicleNoController,
                         ),
@@ -177,6 +182,7 @@ class _BillingPageState extends State<BillingPage> {
                           height: 20,
                         ),
                         CustomTextField(
+                          maxLength: 46,
                           labelText: "Chalan no (Optional)",
                           controller: _chalanNoController,
                         ),
@@ -253,7 +259,7 @@ class _BillingPageState extends State<BillingPage> {
                                       SubmitInvoiceEvent(
                                         customerId: _billedToController.text,
                                         invoiceChallanNo:
-                                            _chalanNoController.text,
+                                            _chalanNoController.text ?? " ",
                                         invoiceDateOfSupply:
                                             _dateController.text,
                                         invoiceName:
@@ -267,7 +273,7 @@ class _BillingPageState extends State<BillingPage> {
                                         invoiceStateCode:
                                             _invoiceStateCodeController.text,
                                         invoiceVehicleNo:
-                                            _vehicleNoController.text,
+                                            _vehicleNoController.text ?? " ",
                                         shipperId: _shippedByController.text,
                                       ),
                                     );

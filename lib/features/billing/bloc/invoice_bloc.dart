@@ -19,17 +19,21 @@ class InvoiceBloc extends Bloc<InvoiceEvent, InvoiceState> {
       Emitter<InvoiceState> emit) async {
         emit(SubmitInvoiceLoadingState());
     try {
+      if(event.customerId.isEmpty || event.invoiceDateOfSupply.isEmpty || event.invoiceName.isEmpty || event.invoicePlaceOfSupply.isEmpty || event.invoiceReverseCharge.isEmpty || event.invoiceState.isEmpty || event.invoiceStateCode.isEmpty || event.shipperId.isEmpty){
+        emit(SubmitInvoiceFailedState(message: "Enter the Required Credentials."));
+      }
       final box = await Hive.openBox("authtoken");
       final details = JwtDecoder.decode(box.get("token"));
       final userId = details["user_id"];
       box.close();
+      print(event.customerId);
       final requestBody = jsonEncode({
         "invoice_name": event.invoiceName,
         "invoice_reverse_charge": event.invoiceReverseCharge,
         "invoice_state": event.invoiceState,
         "invoice_state_code": event.invoiceStateCode,
-        "invoice_challan_number": event.invoiceChallanNo,
-        "invoice_vehicle_number": event.invoiceVehicleNo,
+        "invoice_challan_number": event.invoiceChallanNo ?? " ",
+        "invoice_vehicle_number": event.invoiceVehicleNo ?? " ",
         "invoice_date_of_supply": event.invoiceDateOfSupply,
         "invoice_place_of_supply": event.invoicePlaceOfSupply,
         "user_id": userId,

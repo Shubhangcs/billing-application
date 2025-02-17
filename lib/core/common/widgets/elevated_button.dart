@@ -17,7 +17,7 @@ class CustomElevatedButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      onPressed: onPressed,
+      onPressed: isLoading ? null : onPressed,
       child:isLoading? SizedBox(width: 30 , height: 30,child: CircularProgressIndicator(color: AppColors.white,strokeCap: StrokeCap.round,)): Text(
         buttonText,
         style: GoogleFonts.poppins(

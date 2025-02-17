@@ -8,4 +8,7 @@ class AppUrls{
   static const String getReceivers = "$url/get/receivers";
   static const String getConsignees = "$url/get/consignees";
   static const String createInvoice = "$url/create/invoice";
+  static const String getProducts = "$url/get/products";
+  static const String addProducts = "$url/create/product";
+  static const String makePayment = "$url/update/invoice/payment";
 }

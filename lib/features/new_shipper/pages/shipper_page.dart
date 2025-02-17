@@ -69,6 +69,7 @@ class _ShipperPageState extends State<ShipperPage> {
                       height: 20,
                     ),
                     CustomTextField(
+                      maxLength: 46,
                       labelText: "Shipper Name",
                       controller: _shipperNameController,
                     ),
@@ -76,6 +77,7 @@ class _ShipperPageState extends State<ShipperPage> {
                       height: 20,
                     ),
                     CustomTextField(
+                      maxLength: 46,
                       labelText: "Shipper Address",
                       controller: _shipperAddressController,
                     ),
@@ -83,6 +85,7 @@ class _ShipperPageState extends State<ShipperPage> {
                       height: 20,
                     ),
                     CustomTextField(
+                      maxLength: 15,
                       labelText: "Shipper GSTIN",
                       controller: _shipperGstinController,
                     ),
@@ -90,6 +93,7 @@ class _ShipperPageState extends State<ShipperPage> {
                       height: 20,
                     ),
                     CustomTextField(
+                      maxLength: 10,
                       labelText: "Shipper Phone Number",
                       controller: _shipperPhoneNumberController,
                     ),
@@ -97,6 +101,7 @@ class _ShipperPageState extends State<ShipperPage> {
                       height: 20,
                     ),
                     CustomTextField(
+                      maxLength: 46,
                       labelText: "Shipper State",
                       controller: _shipperStateController,
                     ),
@@ -104,6 +109,7 @@ class _ShipperPageState extends State<ShipperPage> {
                       height: 20,
                     ),
                     CustomTextField(
+                      maxLength: 5,
                       labelText: "Shipper State Code",
                       controller: _shipperStateCodeController,
                     ),

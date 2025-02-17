@@ -17,6 +17,9 @@ class ShipperBloc extends Bloc<ShipperEvent, ShipperState> {
 
   Future<void> _addShipper(AddShipperEvent event, Emitter<ShipperState> emit) async {
     emit(ShipperLoadingState());
+    if(event.shipperAddress.isEmpty || event.shipperGSTIN.isEmpty || event.shipperName.isEmpty || event.shipperPhoneNumber.isEmpty || event.shipperState.isEmpty || event.shipperStateCode.isEmpty){
+      emit(AddShipperFailedState(message: "Enter the Required Credentils."));
+    }
     try {
       final box = await Hive.openBox("authtoken");
       final userId = JwtDecoder.decode(box.get("token"));

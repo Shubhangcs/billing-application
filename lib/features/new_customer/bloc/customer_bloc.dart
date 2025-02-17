@@ -18,6 +18,9 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
   Future<void> _addCustomer(
       AddCustomerEvent event, Emitter<CustomerState> emit) async {
     emit(CustomerLoadingState());
+    if(event.customerAddress.isEmpty || event.customerGSTIN.isEmpty || event.customerName.isEmpty || event.customerPhoneNumber.isEmpty || event.customerState.isEmpty || event.customerStateCode.isEmpty){
+      emit(AddCustomerFailedState(message: "Enter the Credentials and then Submit."));
+    }
     try {
       final box = await Hive.openBox("authtoken");
       final ids = JwtDecoder.decode(box.get("token"));
@@ -41,7 +44,6 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
         emit(AddCustomerFailedState(message: response["message"]));
         return;
       }
-      print(response);
       emit(AddCustomerSuccessState(message: response["message"]));
     } catch (e) {
       emit(AddCustomerFailedState(message: "An Exception Occured."));

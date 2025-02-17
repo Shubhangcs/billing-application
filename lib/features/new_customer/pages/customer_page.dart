@@ -73,6 +73,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   height: 20,
                 ),
                 CustomTextField(
+                  maxLength: 46,
                   labelText: "Customer Name",
                   controller: _customerNameController,
                 ),
@@ -80,6 +81,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   height: 20,
                 ),
                 CustomTextField(
+                  maxLength: 46,
                   labelText: "Customer Address",
                   controller: _customerAddressController,
                 ),
@@ -87,6 +89,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   height: 20,
                 ),
                 CustomTextField(
+                  maxLength: 15,
                   labelText: "Customer GSTIN",
                   controller: _customerGstinController,
                 ),
@@ -94,6 +97,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   height: 20,
                 ),
                 CustomTextField(
+                  maxLength: 10,
                   labelText: "Customer Phone Number",
                   controller: _customerPhoneNumberController,
                 ),
@@ -101,6 +105,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   height: 20,
                 ),
                 CustomTextField(
+                  maxLength: 46,
                   labelText: "Customer State",
                   controller: _customerStateController,
                 ),
@@ -108,6 +113,7 @@ class _CustomerPageState extends State<CustomerPage> {
                   height: 20,
                 ),
                 CustomTextField(
+                  maxLength: 5,
                   labelText: "Customer State Code",
                   controller: _customerStateCodeController,
                 ),
