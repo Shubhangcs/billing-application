@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_billing/features/authentication/bloc/auth_bloc.dart';
-import 'package:new_billing/features/authentication/pages/login.dart';
-import 'package:new_billing/features/authentication/pages/register.dart';
+import 'package:new_billing/features/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:new_billing/features/authentication/presentation/pages/login.dart';
+import 'package:new_billing/features/authentication/presentation/pages/register.dart';
 import 'package:new_billing/features/billing/bloc/invoice_bloc.dart';
 import 'package:new_billing/features/billing/bloc/invoice_details_bloc.dart';
 import 'package:new_billing/features/billing/bloc/products_bloc.dart';
@@ -15,22 +15,25 @@ import 'package:new_billing/features/new_customer/bloc/customer_bloc.dart';
 import 'package:new_billing/features/new_customer/pages/customer_page.dart';
 import 'package:new_billing/features/new_shipper/bloc/shipper_bloc.dart';
 import 'package:new_billing/features/new_shipper/pages/shipper_page.dart';
+import 'package:new_billing/init_dependencies.dart';
 
 class Routes {
   static Route? onGenerate(RouteSettings settings) {
+    const String login = "/login";
+    const String register = "/register";
     switch (settings.name) {
-      case "/login":
+      case login:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (context) => AuthBloc(),
+            create: (context) => serviceLocator<AuthBloc>(),
             child: LoginPage(),
           ),
         );
 
-      case "/register":
+      case register:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (context) => AuthBloc(),
+            create: (context) => serviceLocator<AuthBloc>(),
             child: RegisterPage(),
           ),
         );
