@@ -15,7 +15,7 @@ class BillingApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       onGenerateRoute: Routes.onGenerate,
-      initialRoute: "/login",
+      initialRoute: "/history",
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,

@@ -18,8 +18,14 @@ class AppTheme {
   ).copyWith(
     scaffoldBackgroundColor: AppColors.white,
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.white,
-      iconTheme: const IconThemeData(size: 32, color: AppColors.blue),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        ),
+      ),
+      backgroundColor: AppColors.blue,
+      iconTheme: const IconThemeData(size: 32, color: AppColors.white),
       actionsIconTheme: const IconThemeData(size: 30),
       actionsPadding: const EdgeInsets.symmetric(horizontal: 5),
       elevation: 0,
@@ -28,13 +34,13 @@ class AppTheme {
       titleTextStyle: GoogleFonts.poppins(
         fontSize: 22,
         fontWeight: FontWeight.w500,
-        color: AppColors.black,
+        color: AppColors.white,
       ),
       centerTitle: false,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,
-        statusBarColor: AppColors.white,
-        statusBarIconBrightness: Brightness.dark,
+        statusBarColor: AppColors.blue,
+        statusBarIconBrightness: Brightness.light,
         systemNavigationBarColor: AppColors.white,
         systemNavigationBarDividerColor: AppColors.white,
         systemNavigationBarIconBrightness: Brightness.dark,
