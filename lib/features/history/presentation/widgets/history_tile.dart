@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:new_billing/core/themes/colors.dart';
 
 class HistoryTile extends StatelessWidget {
-  const HistoryTile({super.key});
+  final VoidCallback onPressed;
+  const HistoryTile({
+    super.key,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2),
       child: ListTile(
+        onTap: onPressed,
         leading: Container(
           decoration: BoxDecoration(
             color: AppColors.opacBlue,

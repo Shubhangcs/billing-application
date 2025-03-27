@@ -108,7 +108,7 @@ class AppTheme {
       overlayColor: WidgetStateProperty.all(AppColors.white),
     ),
     bottomSheetTheme: const BottomSheetThemeData(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       surfaceTintColor: Colors.transparent,
     ),
     textTheme: TextTheme(
