@@ -103,11 +103,6 @@ class Routes {
             child: ShipperPage(),
           ),
         );
-
-      default:
-        return MaterialPageRoute(
-          builder: (context) => Scaffold(),
-        );
     }
   }
 }

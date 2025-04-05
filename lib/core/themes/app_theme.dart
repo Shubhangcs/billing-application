@@ -111,6 +111,12 @@ class AppTheme {
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.transparent,
     ),
+    cardTheme: CardTheme(
+      surfaceTintColor: AppColors.transparent,
+      color: AppColors.white,
+      elevation: 1,
+      shadowColor: AppColors.lightBlue,
+    ),
     textTheme: TextTheme(
       headlineSmall: GoogleFonts.poppins(
         color: AppColors.black,

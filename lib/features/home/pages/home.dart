@@ -1,83 +1,103 @@
 import 'package:flutter/material.dart';
-import 'package:new_billing/core/common/widgets/app_bar.dart';
-import 'package:new_billing/features/home/widgets/services_card.dart';
+import 'package:new_billing/core/themes/colors.dart';
+import 'package:new_billing/features/home/widgets/grid_card.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar().build(context , true),
+      appBar: AppBar(
+        leading: Icon(Icons.home_rounded),
+        title: Text("Home"),
+      ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/hero.png",
-                width: 300,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: (){
-                  Navigator.pushNamed(context, "/billing");
-                },
-                child: ServicesCard(
-                  cardTitle: "Generate Invoice",
-                  leading: Icons.receipt_long_outlined,
-                  trailing: Icons.arrow_outward_rounded,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Align(
+                  alignment: Alignment(-1, 0),
+                  child: Text(
+                    "Welcome to Billsoft",
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: (){
-                  Navigator.pushNamed(context, "/history");
-                },
-                child: ServicesCard(
-                  cardTitle: "Invoice History",
-                  leading: Icons.history,
-                  trailing: Icons.arrow_outward_rounded,
+                SizedBox(
+                  height: 5,
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: (){
-                  Navigator.pushNamed(context, "/customer");
-                },
-                child: ServicesCard(
-                  cardTitle: "Add New Customer",
-                  leading: Icons.group_add_sharp,
-                  trailing: Icons.arrow_outward_rounded,
+                Align(
+                  alignment: Alignment(-1, 0),
+                  child: Text(
+                    "Get Ready to Generate Bills,",
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: (){
-                  Navigator.pushNamed(context, "/shipper");
-                },
-                child: ServicesCard(
-                  cardTitle: "Add New Shipper",
-                  leading: Icons.person_3_rounded,
-                  trailing: Icons.arrow_outward_rounded,
+                SizedBox(
+                  height: 20,
                 ),
-              ),
-            ],
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 240,
+                  child: Card(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.receipt_long_rounded,
+                            color: AppColors.blue,
+                            size: 80,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Generate Invoice",
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                GridView(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  children: [
+                    GridCard(
+                      icon: Icons.fire_truck_outlined,
+                      cardName: "Logistics",
+                    ),
+                    GridCard(
+                      icon: Icons.people_outline_rounded,
+                      cardName: "Customers",
+                    ),
+                    GridCard(
+                      icon: Icons.account_balance_outlined,
+                      cardName: "Agencies",
+                    ),
+                    GridCard(
+                      icon: Icons.history,
+                      cardName: "History",
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
