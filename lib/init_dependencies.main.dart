@@ -5,6 +5,7 @@ final serviceLocator = GetIt.instance;
 Future<void> initDependancies() async {
   await _initHive();
   _initAuth();
+  _initHistory();
   serviceLocator.registerLazySingleton(() => Connection());
   serviceLocator.registerLazySingleton(() => http.Client());
 }
@@ -49,6 +50,55 @@ void _initAuth() {
       () => AuthBloc(
         loginUsecase: serviceLocator(),
         registerUsecase: serviceLocator(),
+      ),
+    );
+}
+
+void _initHistory() {
+  serviceLocator
+    ..registerFactory<HistoryRemoteDataSource>(
+      () => HistoryRemoteDataSourceImpl(
+        client: serviceLocator(),
+        connection: serviceLocator(),
+      ),
+    )
+    ..registerFactory<HistoryLocalDataSource>(() => HistoryLocalDataSourceImpl(
+          box: serviceLocator(),
+        ))
+    ..registerLazySingleton<HistoryRepository>(
+      () => HistoryRepositoryImpl(
+        historyLocalDataSource: serviceLocator(),
+        historyRemoteDataSource: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => FetchHistoryUsecase(
+        historyRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => DeleteInvoiceUsecase(
+        historyRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => UpdatePaymentStatusUsecase(
+        historyRepository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => HistoryBloc(
+        fetchHistoryUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => DeleteInvoiceCubit(
+        deleteInvoiceUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => PaymentStatusUpdaterCubit(
+        updatePaymentStatusUsecase: serviceLocator(),
       ),
     );
 }

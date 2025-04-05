@@ -9,6 +9,8 @@ import 'package:new_billing/features/billing/bloc/products_bloc.dart';
 import 'package:new_billing/features/billing/pages/billing_page.dart';
 import 'package:new_billing/features/billing/pages/product_page.dart';
 import 'package:new_billing/features/history/presentation/bloc/history_bloc.dart';
+import 'package:new_billing/features/history/presentation/cubit/delete_invoice_cubit.dart';
+import 'package:new_billing/features/history/presentation/cubit/payment_status_updater_cubit.dart';
 import 'package:new_billing/features/history/presentation/pages/history_page.dart';
 import 'package:new_billing/features/home/pages/home.dart';
 import 'package:new_billing/features/new_customer/bloc/customer_bloc.dart';
@@ -21,6 +23,7 @@ class Routes {
   static Route? onGenerate(RouteSettings settings) {
     const String login = "/login";
     const String register = "/register";
+    const String history = "/history";
     switch (settings.name) {
       case login:
         return MaterialPageRoute(
@@ -66,10 +69,21 @@ class Routes {
           ),
         );
 
-      case "/history":
+      case history:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => HistoryBloc(),
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => serviceLocator<HistoryBloc>(),
+              ),
+              BlocProvider(
+                create: (context) => serviceLocator<DeleteInvoiceCubit>(),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    serviceLocator<PaymentStatusUpdaterCubit>(),
+              ),
+            ],
             child: HistoryPage(),
           ),
         );

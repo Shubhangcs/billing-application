@@ -28,8 +28,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         headers: {"Content-Type": "application/json"},
       );
       final response = jsonDecode(jsonResponse.body);
+      print(response);
       if (jsonResponse.statusCode != 200) {
-        throw ServerException(message: response["error"]);
+        throw ServerException(message: response["message"]);
       }
       return response["token"];
     } on ServerException catch (e) {

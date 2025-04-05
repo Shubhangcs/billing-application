@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:new_billing/core/themes/colors.dart';
 
 class HistoryTile extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback onTilePressed;
+  final VoidCallback onDeletePressed;
+  final String invoiceName;
+  final String invoiceId;
   const HistoryTile({
     super.key,
-    required this.onPressed,
+    required this.onTilePressed,
+    required this.onDeletePressed,
+    required this.invoiceName,
+    required this.invoiceId,
   });
 
   @override
@@ -13,7 +19,7 @@ class HistoryTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2),
       child: ListTile(
-        onTap: onPressed,
+        onTap: onTilePressed,
         leading: Container(
           decoration: BoxDecoration(
             color: AppColors.opacBlue,
@@ -29,14 +35,21 @@ class HistoryTile extends StatelessWidget {
           ),
         ),
         title: Text(
-          "Title",
+          invoiceName,
           style: Theme.of(context).textTheme.titleSmall,
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(
-          "Subtitle",
+          invoiceId,
           style: Theme.of(context).textTheme.labelSmall,
           overflow: TextOverflow.ellipsis,
+        ),
+        trailing: IconButton(
+          onPressed: onDeletePressed,
+          icon: Icon(
+            Icons.delete,
+            color: AppColors.red,
+          ),
         ),
       ),
     );

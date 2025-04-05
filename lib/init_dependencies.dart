@@ -8,6 +8,16 @@ import 'package:new_billing/features/authentication/domain/repository/auth_repos
 import 'package:new_billing/features/authentication/domain/usecases/login_usecase.dart';
 import 'package:new_billing/features/authentication/domain/usecases/register_usecase.dart';
 import 'package:new_billing/features/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:new_billing/features/history/data/datasource/history_local_data_source.dart';
+import 'package:new_billing/features/history/data/datasource/history_remote_data_source.dart';
+import 'package:new_billing/features/history/data/repository/history_repository_impl.dart';
+import 'package:new_billing/features/history/domain/repository/history_repository.dart';
+import 'package:new_billing/features/history/domain/usecases/delete_invoice_usecase.dart';
+import 'package:new_billing/features/history/domain/usecases/fetch_history_usecase.dart';
+import 'package:new_billing/features/history/domain/usecases/update_payment_status_usecase.dart';
+import 'package:new_billing/features/history/presentation/bloc/history_bloc.dart';
+import 'package:new_billing/features/history/presentation/cubit/delete_invoice_cubit.dart';
+import 'package:new_billing/features/history/presentation/cubit/payment_status_updater_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 

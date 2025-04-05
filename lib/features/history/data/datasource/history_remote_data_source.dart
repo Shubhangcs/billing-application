@@ -10,6 +10,12 @@ abstract interface class HistoryRemoteDataSource {
   Future<List<HistoryModel>> getInvoices({
     required String userId,
   });
+  Future<String> markAsPaid({
+    required String invoiceId,
+  });
+  Future<String> deleteInvoice({
+    required String invoiceId,
+  });
 }
 
 class HistoryRemoteDataSourceImpl implements HistoryRemoteDataSource {
@@ -43,6 +49,47 @@ class HistoryRemoteDataSourceImpl implements HistoryRemoteDataSource {
       throw ServerException(
         message: "Exception while Communicating with The Server.",
       );
+    }
+  }
+
+  @override
+  Future<String> markAsPaid({required String invoiceId}) async {
+    try {
+      final jsonResponse = await client.patch(
+        Uri.parse("${AppUrls.makePayment}/$invoiceId"),
+        headers: {"Content-Type": "application/json"},
+      );
+      final response = jsonDecode(jsonResponse.body);
+      if (jsonResponse.statusCode != 200) {
+        throw ServerException(message: response["message"]);
+      }
+      return response;
+    } on ServerException catch (e) {
+      throw ServerException(message: e.message);
+    } catch (e) {
+      throw ServerException(
+        message: "Exception while Communicating with The Server.",
+      );
+    }
+  }
+
+  @override
+  Future<String> deleteInvoice({required String invoiceId}) async {
+    try {
+      final jsonResponse = await http.delete(
+        Uri.parse("${AppUrls.deleteInvoice}/$invoiceId"),
+        headers: {"Content-Type": "application/json"},
+      );
+      final response = jsonDecode(jsonResponse.body);
+      if (jsonResponse.statusCode != 200) {
+        throw ServerException(message: response["message"]);
+      }
+      return response["message"];
+    } on ServerException catch (e) {
+      throw ServerException(message: e.message);
+    } catch (e) {
+      throw ServerException(
+          message: "Exception while Communicating with The Server.");
     }
   }
 }

@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_billing/core/themes/colors.dart';
-import 'package:new_billing/core/widgets/app_filled_button.dart';
+import 'package:new_billing/core/widgets/app_error_widget.dart';
+import 'package:new_billing/core/widgets/app_snack_bar.dart';
+import 'package:new_billing/features/history/presentation/bloc/history_bloc.dart';
+import 'package:new_billing/features/history/presentation/cubit/delete_invoice_cubit.dart';
+import 'package:new_billing/features/history/presentation/cubit/payment_status_updater_cubit.dart';
+import 'package:new_billing/features/history/presentation/widgets/delete_bottom_sheet.dart';
+import 'package:new_billing/features/history/presentation/widgets/history_loading_widget.dart';
 import 'package:new_billing/features/history/presentation/widgets/history_tile.dart';
+import 'package:new_billing/features/history/presentation/widgets/update_payment_bottom_sheet.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -11,77 +19,64 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  void _showBottomSheet(
-    BuildContext context,
-    bool isDone,
-    String name,
-    String id,
-  ) {
+  @override
+  void initState() {
+    BlocProvider.of<HistoryBloc>(context).add(
+      FetchInvoiceHistoryEvent(),
+    );
+    super.initState();
+  }
+
+  void _showDeleteConfirmationDialog({
+    required BuildContext context,
+    required String invoiceName,
+    required String invoiceId,
+  }) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return BlocBuilder<DeleteInvoiceCubit, DeleteInvoiceState>(
+            builder: (context, state) {
+              return DeleteBottomSheet(
+                isLoading: state is DeleteInvoiceLoadingState,
+                onDeletePressed: () {
+                  BlocProvider.of<DeleteInvoiceCubit>(context).deleteInvoice(
+                    invoiceId: invoiceId,
+                  );
+                },
+                invoiceId: invoiceId,
+                invoiceName: invoiceName,
+              );
+            },
+          );
+        });
+  }
+
+  void _showUpdatePaymentDialog({
+    required BuildContext context,
+    required String invoiceId,
+    required String invoiceName,
+    required bool isPaid,
+  }) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return Container(
-          padding: EdgeInsets.all(20),
-          height: 300,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment(-1, 0),
-                child: Text(
-                  "Invoice",
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: AppColors.lightBlue,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ListTile(
-                      title: Text(
-                        name,
-                        style: Theme.of(context).textTheme.labelLarge,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Text(
-                        id,
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                      leading: Icon(
-                        Icons.insert_drive_file,
-                        color: AppColors.blue,
-                        size: 28,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              AppFilledButton(
-                onPressed: isDone ? null : () {},
-                buttonText: "Mark as Done",
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              AppFilledButton(
-                onPressed: () {},
-                buttonText: "View Invoice",
-              ),
-            ],
-          ),
+        return BlocBuilder<PaymentStatusUpdaterCubit,
+            PaymentStatusUpdaterState>(
+          builder: (context, state) {
+            return UpdatePaymentBottomSheet(
+              isLoading: state is PaymentStatusUpdateLoadingState,
+              onPaymentDone: () {
+                BlocProvider.of<PaymentStatusUpdaterCubit>(context)
+                    .updatePaymentStatus(
+                  invoiceId: invoiceId,
+                );
+              },
+              invoiceId: invoiceId,
+              invoiceName: invoiceName,
+              isPaid: isPaid,
+            );
+          },
         );
       },
     );
@@ -89,64 +84,139 @@ class _HistoryPageState extends State<HistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("History"),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.refresh_rounded,
-              color: AppColors.white,
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<DeleteInvoiceCubit, DeleteInvoiceState>(
+          listener: (context, state) {
+            if (state is DeleteInvoiceFailureState) {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                AppSnackBar(message: state.message).build(context),
+              );
+            }
+            if (state is DeleteInvoiceSuccessState) {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                AppSnackBar(message: state.message).build(context),
+              );
+              BlocProvider.of<HistoryBloc>(context).add(
+                FetchInvoiceHistoryEvent(),
+              );
+            }
+          },
+        ),
+        BlocListener<PaymentStatusUpdaterCubit, PaymentStatusUpdaterState>(
+          listener: (context, state) {
+            if (state is PaymentStatusUpdateFailureState) {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                AppSnackBar(message: state.message).build(context),
+              );
+            }
+            if (state is PaymentStatusUpdateSuccessState) {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                AppSnackBar(message: state.message).build(context),
+              );
+              BlocProvider.of<HistoryBloc>(context).add(
+                FetchInvoiceHistoryEvent(),
+              );
+            }
+          },
+        ),
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("History"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                BlocProvider.of<HistoryBloc>(context).add(
+                  FetchInvoiceHistoryEvent(),
+                );
+              },
+              icon: Icon(
+                Icons.refresh_rounded,
+                color: AppColors.white,
+              ),
             ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment(-1, 0),
-                child: Text(
-                  "Invoice History",
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Align(
-                alignment: Alignment(-1, 0),
-                child: Text(
-                  "List of the Invoices Generated.",
-                  style: Theme.of(context).textTheme.labelMedium,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return HistoryTile(
-                    onPressed: () {
-                      _showBottomSheet(                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                        context,
-                        true,
-                        "Shubhanga CS",
-                        "4drps-gsyy7b-nksm-2jsk-sadas",
-                      );
-                    },
+          ],
+        ),
+        body: BlocBuilder<HistoryBloc, HistoryState>(
+          builder: (context, state) {
+            if (state is FetchInvoicesLoadingState) {
+              return HistoryLoadingWidget();
+            }
+            if (state is FetchInvoiceHistoryFailedState) {
+              return AppErrorWidget(
+                errorMessage: state.message,
+                onPressed: () {
+                  BlocProvider.of<HistoryBloc>(context).add(
+                    FetchInvoiceHistoryEvent(),
                   );
                 },
-                itemCount: 20,
-              )
-            ],
-          ),
+              );
+            }
+            if (state is FetchInvoiceHistorySuccessState) {
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: Alignment(-1, 0),
+                        child: Text(
+                          "Invoice History",
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        alignment: Alignment(-1, 0),
+                        child: Text(
+                          "List of the Invoices Generated.",
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return HistoryTile(
+                            invoiceName: state.invoices[index].invoiceName,
+                            invoiceId: state.invoices[index].invoiceId,
+                            onDeletePressed: () {
+                              _showDeleteConfirmationDialog(
+                                context: context,
+                                invoiceId: state.invoices[index].invoiceId,
+                                invoiceName: state.invoices[index].invoiceName,
+                              );
+                            },
+                            onTilePressed: () {
+                              _showUpdatePaymentDialog(
+                                context: context,
+                                invoiceId: state.invoices[index].invoiceId,
+                                invoiceName: state.invoices[index].invoiceName,
+                                isPaid: state.invoices[index].paymentStatus,
+                              );
+                            },
+                          );
+                        },
+                        itemCount: state.invoices.length,
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }
+            return HistoryLoadingWidget();
+          },
         ),
       ),
     );

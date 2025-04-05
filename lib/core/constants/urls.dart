@@ -11,4 +11,6 @@ class AppUrls{
   static const String getProducts = "$url/get/products";
   static const String addProducts = "$url/create/product";
   static const String makePayment = "$url/update/invoice/payment";
+  static const String deleteInvoice = "$url/delete/invoice";
+  static const String downloadInvoice = "$url/download/invoice";
 }

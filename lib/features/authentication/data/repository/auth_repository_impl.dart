@@ -10,8 +10,10 @@ import 'package:new_billing/features/authentication/domain/repository/auth_repos
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource authRemoteDataSource;
   final AuthLocalDataSource authLocalDataSource;
-  AuthRepositoryImpl(
-      {required this.authLocalDataSource, required this.authRemoteDataSource});
+  AuthRepositoryImpl({
+    required this.authLocalDataSource,
+    required this.authRemoteDataSource,
+  });
   @override
   Future<Either<Failure, String>> login({
     required String email,

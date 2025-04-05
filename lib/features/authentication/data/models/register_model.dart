@@ -10,8 +10,8 @@ class RegisterModel extends RegisterEntity {
   Map<String, dynamic> toJson() {
     return {
       "user_name": userName,
-      "email": email,
-      "password": password,
+      "user_email": email,
+      "user_password": password,
     };
   }
 }
