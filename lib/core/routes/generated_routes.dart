@@ -13,8 +13,8 @@ import 'package:new_billing/features/history/presentation/cubit/delete_invoice_c
 import 'package:new_billing/features/history/presentation/cubit/payment_status_updater_cubit.dart';
 import 'package:new_billing/features/history/presentation/pages/history_page.dart';
 import 'package:new_billing/features/home/pages/home.dart';
-import 'package:new_billing/features/new_customer/bloc/customer_bloc.dart';
-import 'package:new_billing/features/new_customer/pages/customer_page.dart';
+import 'package:new_billing/features/customer/presentation/bloc/customer_bloc.dart';
+import 'package:new_billing/features/customer/presentation/pages/customer_page.dart';
 import 'package:new_billing/features/new_shipper/bloc/shipper_bloc.dart';
 import 'package:new_billing/features/new_shipper/pages/shipper_page.dart';
 import 'package:new_billing/init_dependencies.dart';

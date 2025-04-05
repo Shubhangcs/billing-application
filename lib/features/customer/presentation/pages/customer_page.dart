@@ -4,7 +4,7 @@ import "package:new_billing/core/common/widgets/app_bar.dart";
 import "package:new_billing/core/common/widgets/custom_snackbar.dart";
 import "package:new_billing/core/common/widgets/elevated_button.dart";
 import "package:new_billing/core/common/widgets/text_field.dart";
-import "package:new_billing/features/new_customer/bloc/customer_bloc.dart";
+import "package:new_billing/features/customer/presentation/bloc/customer_bloc.dart";
 
 class CustomerPage extends StatefulWidget {
   const CustomerPage({super.key});

@@ -114,7 +114,7 @@ class AppTheme {
     cardTheme: CardTheme(
       surfaceTintColor: AppColors.transparent,
       color: AppColors.white,
-      elevation: 1,
+      elevation: 2,
       shadowColor: AppColors.lightBlue,
     ),
     textTheme: TextTheme(

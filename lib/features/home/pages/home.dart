@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
                   alignment: Alignment(-1, 0),
                   child: Text(
                     "Welcome to Billsoft",
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
                 ),
                 SizedBox(
@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
                 Align(
                   alignment: Alignment(-1, 0),
                   child: Text(
-                    "Get Ready to Generate Bills,",
+                    "Get Ready to Generate Bills",
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
@@ -74,8 +74,8 @@ class HomePage extends StatelessWidget {
                   shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
                   ),
                   children: [
                     GridCard(
