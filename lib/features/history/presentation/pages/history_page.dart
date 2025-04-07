@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_billing/core/themes/colors.dart';
+import 'package:new_billing/core/widgets/app_delete_confirmation_bottom_sheet.dart';
 import 'package:new_billing/core/widgets/app_error_widget.dart';
 import 'package:new_billing/core/widgets/app_snack_bar.dart';
 import 'package:new_billing/features/history/presentation/bloc/history_bloc.dart';
 import 'package:new_billing/features/history/presentation/cubit/delete_invoice_cubit.dart';
 import 'package:new_billing/features/history/presentation/cubit/payment_status_updater_cubit.dart';
-import 'package:new_billing/features/history/presentation/widgets/delete_bottom_sheet.dart';
 import 'package:new_billing/features/history/presentation/widgets/history_loading_widget.dart';
 import 'package:new_billing/features/history/presentation/widgets/history_tile.dart';
 import 'package:new_billing/features/history/presentation/widgets/update_payment_bottom_sheet.dart';
@@ -37,15 +37,15 @@ class _HistoryPageState extends State<HistoryPage> {
         builder: (context) {
           return BlocBuilder<DeleteInvoiceCubit, DeleteInvoiceState>(
             builder: (context, state) {
-              return DeleteBottomSheet(
+              return AppDeleteConfirmationBottomSheet(
                 isLoading: state is DeleteInvoiceLoadingState,
                 onDeletePressed: () {
                   BlocProvider.of<DeleteInvoiceCubit>(context).deleteInvoice(
                     invoiceId: invoiceId,
                   );
                 },
-                invoiceId: invoiceId,
-                invoiceName: invoiceName,
+                title: invoiceId,
+                subtitle: invoiceName,
               );
             },
           );

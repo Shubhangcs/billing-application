@@ -11,7 +11,7 @@ class AppColors {
   static final Color darkGrey = Colors.grey.shade600;
   static const Color opacGreen = Color.fromARGB(100, 76, 175, 79);
   static const Color green = Colors.green;
-  static const Color opacRed = Color.fromARGB(100, 244, 67, 54);
+  static const Color opacRed = Color.fromARGB(38, 244, 67, 54);
   static const Color red = Colors.red;
   static const Color transparent = Colors.transparent;
 }

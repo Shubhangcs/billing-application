@@ -117,6 +117,10 @@ class AppTheme {
       elevation: 2,
       shadowColor: AppColors.lightBlue,
     ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: AppColors.blue,
+      foregroundColor: AppColors.white,
+    ),
     textTheme: TextTheme(
       headlineSmall: GoogleFonts.poppins(
         color: AppColors.black,

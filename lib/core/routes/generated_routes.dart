@@ -15,8 +15,8 @@ import 'package:new_billing/features/history/presentation/pages/history_page.dar
 import 'package:new_billing/features/home/pages/home.dart';
 import 'package:new_billing/features/customer/presentation/bloc/customer_bloc.dart';
 import 'package:new_billing/features/customer/presentation/pages/customer_page.dart';
-import 'package:new_billing/features/new_shipper/bloc/shipper_bloc.dart';
-import 'package:new_billing/features/new_shipper/pages/shipper_page.dart';
+import 'package:new_billing/features/logistic/presentation/bloc/shipper_bloc.dart';
+import 'package:new_billing/features/logistic/presentation/pages/shipper_page.dart';
 import 'package:new_billing/init_dependencies.dart';
 
 class Routes {
@@ -24,6 +24,7 @@ class Routes {
     const String login = "/login";
     const String register = "/register";
     const String history = "/history";
+    const String logistics = "/logistics";
     switch (settings.name) {
       case login:
         return MaterialPageRoute(
@@ -96,11 +97,11 @@ class Routes {
           ),
         );
 
-      case "/shipper":
+      case logistics:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
             create: (context) => ShipperBloc(),
-            child: ShipperPage(),
+            child: LogisticsPage(),
           ),
         );
     }

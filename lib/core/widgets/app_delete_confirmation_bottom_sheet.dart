@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:new_billing/core/themes/colors.dart';
 import 'package:new_billing/core/widgets/app_filled_button.dart';
 
-class DeleteBottomSheet extends StatelessWidget {
-  final String invoiceId;
-  final String invoiceName;
+class AppDeleteConfirmationBottomSheet extends StatelessWidget {
+  final String title;
+  final String subtitle;
   final bool isLoading;
   final VoidCallback onDeletePressed;
-  const DeleteBottomSheet({
+  const AppDeleteConfirmationBottomSheet({
     super.key,
-    required this.invoiceId,
-    required this.invoiceName,
+    required this.title,
+    required this.subtitle,
     this.isLoading = false,
     required this.onDeletePressed,
   });
@@ -19,7 +19,7 @@ class DeleteBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(20),
-      height: 250,
+      height: 260,
       width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -33,12 +33,22 @@ class DeleteBottomSheet extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 10,
+          ),
+          Align(
+            alignment: Alignment(-1, 0),
+            child: Text(
+              "Do You Really Want to Delete?",
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
+          ),
+          SizedBox(
+            height: 10,
           ),
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: AppColors.lightBlue,
+              color: AppColors.opacRed,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
@@ -46,17 +56,18 @@ class DeleteBottomSheet extends StatelessWidget {
               children: [
                 ListTile(
                   title: Text(
-                    invoiceName,
-                    style: Theme.of(context).textTheme.labelLarge,
+                    title,
+                    style: Theme.of(context).textTheme.titleSmall,
                     overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: Text(
-                    invoiceId,
-                    style: Theme.of(context).textTheme.labelMedium,
+                    subtitle,
+                    style: Theme.of(context).textTheme.labelSmall,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   leading: Icon(
-                    Icons.insert_drive_file,
-                    color: AppColors.blue,
+                    Icons.delete,
+                    color: AppColors.red,
                     size: 28,
                   ),
                 ),
@@ -64,7 +75,7 @@ class DeleteBottomSheet extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 15,
           ),
           AppFilledButton(
             isLoading: isLoading,
