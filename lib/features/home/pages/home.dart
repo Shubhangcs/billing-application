@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.home_rounded),
+        leading: IconButton(onPressed: () {}, icon: Icon(Icons.person)),
         title: Text("Home"),
       ),
       body: Center(
@@ -20,6 +20,9 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 20,
+                ),
                 Align(
                   alignment: Alignment(-1, 0),
                   child: Text(
@@ -42,7 +45,7 @@ class HomePage extends StatelessWidget {
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: 240,
+                  height: 200,
                   child: Card(
                     child: Center(
                       child: Column(
@@ -89,6 +92,10 @@ class HomePage extends StatelessWidget {
                     GridCard(
                       icon: Icons.account_balance_outlined,
                       cardName: "Agencies",
+                    ),
+                    GridCard(
+                      icon: Icons.currency_rupee_rounded,
+                      cardName: "Bank",
                     ),
                     GridCard(
                       icon: Icons.history,

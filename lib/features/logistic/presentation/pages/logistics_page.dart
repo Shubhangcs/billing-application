@@ -146,6 +146,9 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:new_billing/core/widgets/app_delete_confirmation_bottom_sheet.dart';
+import 'package:new_billing/features/logistic/presentation/widgets/add_logistic_form.dart';
+import 'package:new_billing/features/logistic/presentation/widgets/logistic_tile.dart';
 
 class LogisticsPage extends StatefulWidget {
   const LogisticsPage({super.key});
@@ -155,26 +158,100 @@ class LogisticsPage extends StatefulWidget {
 }
 
 class _LogisticsPageState extends State<LogisticsPage> {
+  void _showAddLogisticBottomsheet() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => AddLogisticForm(),
+    );
+  }
+
+  void _showDeleteBottomsheet({
+    required String logisticsName,
+    required String logisticsAddress,
+  }) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => AppDeleteConfirmationBottomSheet(
+        title: logisticsName,
+        subtitle: logisticsAddress,
+        onDeletePressed: () {},
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Logistics"),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Align(
-                alignment: Alignment(-1, 0),
-                child: Text(
-                  "Logistic's",
-                  style: Theme.of(context).textTheme.headlineMedium,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Align(
+                  alignment: Alignment(-1, 0),
+                  child: Text(
+                    "Logistic's",
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
                 ),
               ),
-            )
-          ],
+              SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Align(
+                  alignment: Alignment(-1, 0),
+                  child: Text(
+                    "Already Exesting Logistic's",
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ListView.builder(
+                itemBuilder: (context, index) {
+                  return LogisticTile(
+                    logisticName: "Prajwal Andanur",
+                    logisticPhoneNumber: "8618245446",
+                    onDeletePressed: () {
+                      _showDeleteBottomsheet(
+                        logisticsName: "Prajwal Andanur",
+                        logisticsAddress: "Shobhavana Campus, Mijar.",
+                      );
+                    },
+                    logisticAddress: "Shobhavana Campus, Mijar.",
+                    logisticGstNumber: "3721678ewjedhwjq",
+                    logisticState: "Karnataka",
+                  );
+                },
+                itemCount: 10,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+              )
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showAddLogisticBottomsheet();
+        },
+        child: Icon(
+          Icons.add_rounded,
         ),
       ),
     );

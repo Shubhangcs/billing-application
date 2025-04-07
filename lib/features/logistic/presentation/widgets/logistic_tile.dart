@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:new_billing/core/themes/colors.dart';
 
-class CustomerTile extends StatelessWidget {
+class LogisticTile extends StatelessWidget {
   final VoidCallback onDeletePressed;
-  final String customerName;
-  final String customerPhoneNumber;
-  final String customerGstNumber;
-  final String customerState;
-  final String customerAddress;
+  final String logisticName;
+  final String logisticPhoneNumber;
+  final String logisticGstNumber;
+  final String logisticState;
+  final String logisticAddress;
 
-  const CustomerTile({
+  const LogisticTile({
     super.key,
-    required this.customerName,
-    required this.customerPhoneNumber,
+    required this.logisticName,
+    required this.logisticPhoneNumber,
     required this.onDeletePressed,
-    required this.customerAddress,
-    required this.customerGstNumber,
-    required this.customerState,
+    required this.logisticAddress,
+    required this.logisticGstNumber,
+    required this.logisticState,
   });
 
   @override
@@ -40,7 +40,7 @@ class CustomerTile extends StatelessWidget {
         ),
       ),
       title: Text(
-        customerName,
+        logisticName,
         style: Theme.of(context).textTheme.titleSmall,
         overflow: TextOverflow.ellipsis,
       ),
@@ -59,7 +59,7 @@ class CustomerTile extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  customerPhoneNumber,
+                  logisticPhoneNumber,
                   style: Theme.of(context).textTheme.labelSmall,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -78,7 +78,7 @@ class CustomerTile extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  customerGstNumber,
+                  logisticGstNumber,
                   style: Theme.of(context).textTheme.labelSmall,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -97,7 +97,7 @@ class CustomerTile extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  customerState,
+                  logisticState,
                   style: Theme.of(context).textTheme.labelSmall,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -117,7 +117,7 @@ class CustomerTile extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  customerAddress,
+                  logisticAddress,
                   style: Theme.of(context).textTheme.labelSmall,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,

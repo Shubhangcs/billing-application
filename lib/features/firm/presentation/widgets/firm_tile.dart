@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:new_billing/core/themes/colors.dart';
 
-class CustomerTile extends StatelessWidget {
+class FirmTile extends StatelessWidget {
   final VoidCallback onDeletePressed;
-  final String customerName;
-  final String customerPhoneNumber;
-  final String customerGstNumber;
-  final String customerState;
-  final String customerAddress;
+  final String firmName;
+  final String firmPhoneNumber;
+  final String firmGstNumber;
+  final String firmState;
+  final String firmAddress;
+  final String firmEmail;
+  final String firmPanNumber;
 
-  const CustomerTile({
+  const FirmTile({
     super.key,
-    required this.customerName,
-    required this.customerPhoneNumber,
+    required this.firmName,
+    required this.firmPhoneNumber,
     required this.onDeletePressed,
-    required this.customerAddress,
-    required this.customerGstNumber,
-    required this.customerState,
+    required this.firmAddress,
+    required this.firmGstNumber,
+    required this.firmState,
+    required this.firmEmail,
+    required this.firmPanNumber,
   });
 
   @override
@@ -40,7 +44,7 @@ class CustomerTile extends StatelessWidget {
         ),
       ),
       title: Text(
-        customerName,
+        firmName,
         style: Theme.of(context).textTheme.titleSmall,
         overflow: TextOverflow.ellipsis,
       ),
@@ -59,7 +63,7 @@ class CustomerTile extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  customerPhoneNumber,
+                  firmPhoneNumber,
                   style: Theme.of(context).textTheme.labelSmall,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -78,7 +82,45 @@ class CustomerTile extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  customerGstNumber,
+                  firmGstNumber,
+                  style: Theme.of(context).textTheme.labelSmall,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5),
+          Row(
+            children: [
+              Text(
+                "Email: ",
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              Expanded(
+                child: Text(
+                  firmEmail,
+                  style: Theme.of(context).textTheme.labelSmall,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5),
+          Row(
+            children: [
+              Text(
+                "PAN: ",
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              Expanded(
+                child: Text(
+                  firmPanNumber,
                   style: Theme.of(context).textTheme.labelSmall,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -97,7 +139,7 @@ class CustomerTile extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  customerState,
+                  firmState,
                   style: Theme.of(context).textTheme.labelSmall,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -117,7 +159,7 @@ class CustomerTile extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  customerAddress,
+                  firmAddress,
                   style: Theme.of(context).textTheme.labelSmall,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,

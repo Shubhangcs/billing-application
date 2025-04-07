@@ -174,14 +174,14 @@ class _CustomerPageState extends State<CustomerPage> {
 
   void _showDeleteBottomsheet({
     required String customerName,
-    required String customerGSTIN,
+    required String customerAddress,
   }) {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
       builder: (context) => AppDeleteConfirmationBottomSheet(
         title: customerName,
-        subtitle: customerGSTIN,
+        subtitle: customerAddress,
         onDeletePressed: () {},
       ),
     );
@@ -201,8 +201,8 @@ class _CustomerPageState extends State<CustomerPage> {
           ),
         ],
       ),
-      body: Center(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -249,7 +249,7 @@ class _CustomerPageState extends State<CustomerPage> {
                     onDeletePressed: () {
                       _showDeleteBottomsheet(
                         customerName: "Prajwal",
-                        customerGSTIN: "Shobhavana Campus, Mijar.",
+                        customerAddress: "Shobhavana Campus, Mijar.",
                       );
                     },
                   );

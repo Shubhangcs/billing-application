@@ -18,30 +18,28 @@ class AppErrorWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
-            Icons.error_outline,
-            size: 40,
+            Icons.error_outline_rounded,
+            size: 60,
+            color: AppColors.blue,
           ),
           SizedBox(
-            height: 5,
+            height: 15,
           ),
           Text(
             errorMessage,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          SizedBox(
-            height: 5,
+            style: Theme.of(context).textTheme.titleSmall,
+            textAlign: TextAlign.center,
           ),
           Text(
-            "You Can Try Again",
+            "You can try again",
             style: Theme.of(context).textTheme.labelMedium,
-          ),
-          SizedBox(
-            height: 5,
+            textAlign: TextAlign.center,
           ),
           IconButton(
             onPressed: () {},
             icon: Icon(
               Icons.refresh_rounded,
+              size: 30,
               color: AppColors.blue,
             ),
           )

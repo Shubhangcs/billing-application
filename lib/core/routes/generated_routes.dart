@@ -8,6 +8,7 @@ import 'package:new_billing/features/billing/bloc/invoice_details_bloc.dart';
 import 'package:new_billing/features/billing/bloc/products_bloc.dart';
 import 'package:new_billing/features/billing/pages/billing_page.dart';
 import 'package:new_billing/features/billing/pages/product_page.dart';
+import 'package:new_billing/features/firm/presentation/pages/firm_page.dart';
 import 'package:new_billing/features/history/presentation/bloc/history_bloc.dart';
 import 'package:new_billing/features/history/presentation/cubit/delete_invoice_cubit.dart';
 import 'package:new_billing/features/history/presentation/cubit/payment_status_updater_cubit.dart';
@@ -16,7 +17,7 @@ import 'package:new_billing/features/home/pages/home.dart';
 import 'package:new_billing/features/customer/presentation/bloc/customer_bloc.dart';
 import 'package:new_billing/features/customer/presentation/pages/customer_page.dart';
 import 'package:new_billing/features/logistic/presentation/bloc/shipper_bloc.dart';
-import 'package:new_billing/features/logistic/presentation/pages/shipper_page.dart';
+import 'package:new_billing/features/logistic/presentation/pages/logistics_page.dart';
 import 'package:new_billing/init_dependencies.dart';
 
 class Routes {
@@ -25,6 +26,7 @@ class Routes {
     const String register = "/register";
     const String history = "/history";
     const String logistics = "/logistics";
+    const String firm = "/firm";
     switch (settings.name) {
       case login:
         return MaterialPageRoute(
@@ -96,13 +98,16 @@ class Routes {
             child: CustomerPage(),
           ),
         );
-
       case logistics:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
             create: (context) => ShipperBloc(),
             child: LogisticsPage(),
           ),
+        );
+      case firm:
+        return MaterialPageRoute(
+          builder: (context) => FirmPage(),
         );
     }
   }
