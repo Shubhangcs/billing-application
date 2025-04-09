@@ -9,6 +9,7 @@ class AppTextField extends StatefulWidget {
   final String hintText;
   final IconData prefixIcon;
   final bool isPasswordField;
+  final int? maxLength;
   const AppTextField({
     super.key,
     required this.controller,
@@ -17,6 +18,7 @@ class AppTextField extends StatefulWidget {
     required this.keyboardType,
     this.isPasswordField = false,
     this.validator,
+    this.maxLength,
   });
 
   @override
@@ -40,27 +42,27 @@ class _AppTextFieldState extends State<AppTextField> {
     return TextFormField(
       style: GoogleFonts.poppins(color: AppColors.black),
       obscureText: obscureText,
+      maxLength: widget.maxLength,
       cursorColor: AppColors.blue,
       controller: widget.controller,
       cursorHeight: 24,
       keyboardType: widget.keyboardType,
       validator: widget.validator,
       decoration: InputDecoration(
+        counterText: "",
         hintText: widget.hintText,
-        suffixIcon:
-            isPasswordField
-                ? IconButton(
-                  onPressed: () {
-                    setState(() {
-                      obscureText = !obscureText;
-                    });
-                  },
-                  icon:
-                      obscureText
-                          ? Icon(Icons.remove_red_eye_rounded)
-                          : Icon(Icons.remove_red_eye_outlined),
-                )
-                : null,
+        suffixIcon: isPasswordField
+            ? IconButton(
+                onPressed: () {
+                  setState(() {
+                    obscureText = !obscureText;
+                  });
+                },
+                icon: obscureText
+                    ? Icon(Icons.remove_red_eye_rounded)
+                    : Icon(Icons.remove_red_eye_outlined),
+              )
+            : null,
         prefixIcon: Icon(widget.prefixIcon),
       ),
     );

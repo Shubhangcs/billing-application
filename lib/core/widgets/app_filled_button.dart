@@ -30,7 +30,7 @@ class AppFilledButton extends StatelessWidget {
                 width: 20,
                 height: 20,
                 child: CircularProgressIndicator(
-                  color: AppColors.blue,
+                  color: color,
                   strokeCap: StrokeCap.round,
                   strokeWidth: 2.5,
                 ),

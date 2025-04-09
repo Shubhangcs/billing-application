@@ -8,6 +8,7 @@ class AppTextFieldMultiline extends StatefulWidget {
   final String? Function(String?)? validator;
   final String hintText;
   final int maxLines;
+  final int? maxLength;
   const AppTextFieldMultiline({
     super.key,
     required this.controller,
@@ -15,6 +16,7 @@ class AppTextFieldMultiline extends StatefulWidget {
     required this.keyboardType,
     required this.maxLines,
     this.validator,
+    this.maxLength,
   });
 
   @override
@@ -25,6 +27,7 @@ class _AppTextFieldMultilineState extends State<AppTextFieldMultiline> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLength: widget.maxLength,
       maxLines: widget.maxLines,
       style: GoogleFonts.poppins(color: AppColors.black),
       cursorColor: AppColors.blue,

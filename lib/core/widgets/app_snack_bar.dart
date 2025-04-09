@@ -15,8 +15,7 @@ class AppSnackBar {
       ),
       backgroundColor: AppColors.blue,
       elevation: 1,
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      behavior: SnackBarBehavior.fixed,
     );
   }
 }

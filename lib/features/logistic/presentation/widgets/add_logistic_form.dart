@@ -58,6 +58,7 @@ class _AddLogisticFormState extends State<AddLogisticForm> {
                 children: [
                   Expanded(
                     child: AppTextField(
+                      maxLength: 30,
                       controller: widget.logisticStateController,
                       hintText: "State",
                       prefixIcon: Icons.location_on,
@@ -67,6 +68,7 @@ class _AddLogisticFormState extends State<AddLogisticForm> {
                   const SizedBox(width: 20),
                   Expanded(
                     child: AppTextField(
+                      maxLength: 2,
                       controller: widget.logisticStateCode,
                       hintText: "State Code",
                       prefixIcon: Icons.pin,
@@ -80,6 +82,7 @@ class _AddLogisticFormState extends State<AddLogisticForm> {
                 children: [
                   Expanded(
                     child: AppTextField(
+                      maxLength: 10,
                       controller: widget.logisticPhone,
                       hintText: "Phone",
                       prefixIcon: Icons.phone,
@@ -89,6 +92,7 @@ class _AddLogisticFormState extends State<AddLogisticForm> {
                   const SizedBox(width: 20),
                   Expanded(
                     child: AppTextField(
+                      maxLength: 15,
                       controller: widget.logisticGstController,
                       hintText: "GSTIN",
                       prefixIcon: Icons.password_rounded,
@@ -99,6 +103,7 @@ class _AddLogisticFormState extends State<AddLogisticForm> {
               ),
               const SizedBox(height: 15),
               AppTextFieldMultiline(
+                maxLength: 500,
                 controller: widget.logisticAddressController,
                 hintText: "Logistic Address",
                 keyboardType: TextInputType.text,
