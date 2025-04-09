@@ -15,7 +15,6 @@ import 'package:new_billing/features/history/presentation/cubit/delete_invoice_c
 import 'package:new_billing/features/history/presentation/cubit/payment_status_updater_cubit.dart';
 import 'package:new_billing/features/history/presentation/pages/history_page.dart';
 import 'package:new_billing/features/home/pages/home.dart';
-import 'package:new_billing/features/customer/presentation/bloc/customer_bloc.dart';
 import 'package:new_billing/features/customer/presentation/pages/customer_page.dart';
 import 'package:new_billing/features/logistic/presentation/cubit/add_logistic_cubit.dart';
 import 'package:new_billing/features/logistic/presentation/cubit/delete_logistic_cubit.dart';
@@ -110,8 +109,8 @@ class Routes {
 
       case customers:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => CustomerBloc(),
+          builder: (context) => MultiBlocProvider(
+            providers: [],
             child: CustomerPage(),
           ),
         );

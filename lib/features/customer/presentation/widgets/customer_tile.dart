@@ -4,7 +4,6 @@ import 'package:new_billing/core/themes/colors.dart';
 class CustomerTile extends StatelessWidget {
   final VoidCallback onDeletePressed;
   final String customerName;
-  final String customerPhoneNumber;
   final String customerGstNumber;
   final String customerState;
   final String customerAddress;
@@ -12,7 +11,6 @@ class CustomerTile extends StatelessWidget {
   const CustomerTile({
     super.key,
     required this.customerName,
-    required this.customerPhoneNumber,
     required this.onDeletePressed,
     required this.customerAddress,
     required this.customerGstNumber,
@@ -48,25 +46,6 @@ class CustomerTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 5),
-          Row(
-            children: [
-              Text(
-                "Phone: ",
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              Expanded(
-                child: Text(
-                  customerPhoneNumber,
-                  style: Theme.of(context).textTheme.labelSmall,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              ),
-            ],
-          ),
           const SizedBox(height: 5),
           Row(
             children: [

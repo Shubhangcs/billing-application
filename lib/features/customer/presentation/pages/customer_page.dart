@@ -152,8 +152,15 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_billing/core/widgets/app_delete_confirmation_bottom_sheet.dart';
+import 'package:new_billing/core/widgets/app_empty_widget.dart';
+import 'package:new_billing/core/widgets/app_error_widget.dart';
+import 'package:new_billing/features/customer/presentation/cubit/add_customer_cubit.dart';
+import 'package:new_billing/features/customer/presentation/cubit/delete_customer_cubit.dart';
+import 'package:new_billing/features/customer/presentation/cubit/fetch_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/widgets/add_customer_form.dart';
+import 'package:new_billing/features/customer/presentation/widgets/customer_page_loading_widget.dart';
 import 'package:new_billing/features/customer/presentation/widgets/customer_tile.dart';
 
 class CustomerPage extends StatefulWidget {
@@ -164,17 +171,53 @@ class CustomerPage extends StatefulWidget {
 }
 
 class _CustomerPageState extends State<CustomerPage> {
+  final TextEditingController _customerNameController = TextEditingController();
+  final TextEditingController _customerStateController =
+      TextEditingController();
+  final TextEditingController _customerStateCodeController =
+      TextEditingController();
+  final TextEditingController _customerGstInController =
+      TextEditingController();
+  final TextEditingController _customerAddressController =
+      TextEditingController();
+
+  @override
+  void initState() {
+    _fetchCustomers();
+    super.initState();
+  }
+
+  void _fetchCustomers() {
+    BlocProvider.of<FetchCustomerCubit>(context).fetchCustomers();
+  }
+
   void _showAddCustomerBottomsheet() {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (context) => AddCustomerForm(),
+      builder: (context) => AddCustomerForm(
+        customerNameController: _customerNameController,
+        customerAddressController: _customerAddressController,
+        customerGstInController: _customerGstInController,
+        customerStateController: _customerStateController,
+        customerStateCodeController: _customerStateCodeController,
+        onPressed: () {
+          BlocProvider.of<AddCustomerCubit>(context).addCustomer(
+            customerName: _customerNameController.text,
+            customerAddress: _customerAddressController.text,
+            customerGstNumber: _customerGstInController.text,
+            customerState: _customerStateController.text,
+            customerStateCode: _customerStateCodeController.text,
+          );
+        },
+      ),
     );
   }
 
   void _showDeleteBottomsheet({
     required String customerName,
     required String customerAddress,
+    required String customerId,
   }) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -182,7 +225,11 @@ class _CustomerPageState extends State<CustomerPage> {
       builder: (context) => AppDeleteConfirmationBottomSheet(
         title: customerName,
         subtitle: customerAddress,
-        onDeletePressed: () {},
+        onDeletePressed: () {
+          BlocProvider.of<DeleteCustomerCubit>(context).deleteCustomer(
+            customerId: customerId,
+          );
+        },
       ),
     );
   }
@@ -194,71 +241,98 @@ class _CustomerPageState extends State<CustomerPage> {
         title: Text("Customer"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _fetchCustomers();
+            },
             icon: Icon(
               Icons.refresh,
             ),
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Align(
-                  alignment: Alignment(-1, 0),
-                  child: Text(
-                    "Customer's",
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
+      body: BlocBuilder<FetchCustomerCubit, FetchCustomerState>(
+        builder: (context, state) {
+          if (state is FetchCustomerLoadingState) {
+            return CustomerPageLoadingWidget();
+          }
+          if (state is FetchCustomerFailureState) {
+            return AppErrorWidget(
+              errorMessage: state.message,
+              onPressed: () {},
+            );
+          }
+          if (state is FetchCustomerSuccessState && state.customers.isEmpty) {
+            return AppEmptyWidget(
+              errorMessage: "No Customres To Display",
+              onPressed: () {},
+            );
+          }
+          if (state is FetchCustomerSuccessState) {
+            return SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Align(
+                        alignment: Alignment(-1, 0),
+                        child: Text(
+                          "Customer's",
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Align(
+                        alignment: Alignment(-1, 0),
+                        child: Text(
+                          "Already Exesting Customer's",
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return CustomerTile(
+                          customerName: state.customers[index].customerName,
+                          customerAddress:
+                              state.customers[index].customerAddress,
+                          customerGstNumber:
+                              state.customers[index].customerGstNumber,
+                          customerState: state.customers[index].customerState,
+                          onDeletePressed: () {
+                            _showDeleteBottomsheet(
+                              customerName: state.customers[index].customerName,
+                              customerAddress:
+                                  state.customers[index].customerAddress,
+                              customerId: state.customers[index].customerId,
+                            );
+                          },
+                        );
+                      },
+                      itemCount: state.customers.length,
+                    )
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 5,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Align(
-                  alignment: Alignment(-1, 0),
-                  child: Text(
-                    "Already Exesting Customer's",
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return CustomerTile(
-                    customerName: "Prajwal",
-                    customerPhoneNumber: "8989128301",
-                    customerAddress: "Shobhavana Campus, Mijar.",
-                    customerGstNumber: "78y442urh839yrh",
-                    customerState: "Karnataka",
-                    onDeletePressed: () {
-                      _showDeleteBottomsheet(
-                        customerName: "Prajwal",
-                        customerAddress: "Shobhavana Campus, Mijar.",
-                      );
-                    },
-                  );
-                },
-                itemCount: 10,
-              )
-            ],
-          ),
-        ),
+            );
+          }
+          return CustomerPageLoadingWidget();
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

@@ -3,29 +3,29 @@ import 'dart:convert';
 import 'package:new_billing/core/constants/urls.dart';
 import 'package:new_billing/core/failures/exceptions.dart';
 import 'package:new_billing/core/utils/connection/connection.dart';
-import 'package:new_billing/features/logistic/data/models/logistic_model.dart';
+import 'package:new_billing/features/customer/data/models/customer_model.dart';
 import 'package:http/http.dart' as http;
 
-abstract interface class LogisticRemoteDataSource {
-  Future<List<LogisticModel>> fetchLogistics({
+abstract interface class CustomerRemoteDataSource {
+  Future<List<CustomerModel>> fetchCustomer({
     required String userId,
   });
-  Future<String> addLogistic({required LogisticModel logisticModel});
-  Future<String> deleteLogistic({
-    required String logisticId,
+  Future<String> addCustomer({required CustomerModel customerModel});
+  Future<String> deleteCustomer({
+    required String customerId,
   });
 }
 
-class LogisticRemoteDataSourceImpl implements LogisticRemoteDataSource {
+class CustomerRemoteDataSourceImpl implements CustomerRemoteDataSource {
   final Connection connection;
   final http.Client client;
-  LogisticRemoteDataSourceImpl({
+  CustomerRemoteDataSourceImpl({
     required this.connection,
     required this.client,
   });
   @override
-  Future<String> addLogistic({
-    required LogisticModel logisticModel,
+  Future<String> addCustomer({
+    required CustomerModel customerModel,
   }) async {
     try {
       if (!await connection.checkConnection()) {
@@ -33,7 +33,7 @@ class LogisticRemoteDataSourceImpl implements LogisticRemoteDataSource {
       }
       final jsonResponse = await client.post(
         Uri.parse(AppUrls.addShipper),
-        body: jsonEncode(logisticModel.toJson()),
+        body: jsonEncode(customerModel.toJson()),
         headers: {"Content-Type": "application/json"},
       );
       final response = jsonDecode(jsonResponse.body);
@@ -51,7 +51,7 @@ class LogisticRemoteDataSourceImpl implements LogisticRemoteDataSource {
   }
 
   @override
-  Future<List<LogisticModel>> fetchLogistics({
+  Future<List<CustomerModel>> fetchCustomer({
     required String userId,
   }) async {
     try {
@@ -66,14 +66,14 @@ class LogisticRemoteDataSourceImpl implements LogisticRemoteDataSource {
       if (jsonResponse.statusCode != 200) {
         throw ServerException(message: response["message"]);
       }
-      if (response["consignee_details"] == null) {
-        return <LogisticModel>[];
+      if (response["reciver_details"] == null) {
+        return <CustomerModel>[];
       }
-      final List<LogisticModel> logistics =
-          (response["consignee_details"] as List)
-              .map((ele) => LogisticModel.fromJson(ele))
+      final List<CustomerModel> customer =
+          (response["reciver_details"] as List)
+              .map((ele) => CustomerModel.fromJson(ele))
               .toList();
-      return logistics;
+      return customer;
     } on ServerException catch (e) {
       throw ServerException(message: e.message);
     } catch (e) {
@@ -84,15 +84,15 @@ class LogisticRemoteDataSourceImpl implements LogisticRemoteDataSource {
   }
 
   @override
-  Future<String> deleteLogistic({
-    required String logisticId,
+  Future<String> deleteCustomer({
+    required String customerId,
   }) async {
     try {
       if (!await connection.checkConnection()) {
         throw ServerException(message: "Not Connected To Internet.");
       }
       final jsonResponse = await client.delete(
-        Uri.parse("${AppUrls.deleteConsignee}/$logisticId"),
+        Uri.parse("${AppUrls.deleteConsignee}/$customerId"),
         headers: {"Content-Type": "application/json"},
       );
       final response = jsonDecode(jsonResponse.body);
