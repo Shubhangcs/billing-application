@@ -4,7 +4,25 @@ import 'package:new_billing/core/widgets/app_text_field.dart';
 import 'package:new_billing/core/widgets/app_text_field_multiline.dart';
 
 class AddLogisticForm extends StatefulWidget {
-  const AddLogisticForm({super.key});
+  final TextEditingController logisticNameController;
+  final TextEditingController logisticStateController;
+  final TextEditingController logisticStateCode;
+  final TextEditingController logisticPhone;
+  final TextEditingController logisticGstController;
+  final TextEditingController logisticAddressController;
+  final VoidCallback onPressed;
+  final bool isLoading;
+  const AddLogisticForm({
+    super.key,
+    required this.logisticAddressController,
+    required this.logisticGstController,
+    required this.logisticNameController,
+    required this.logisticPhone,
+    required this.logisticStateCode,
+    required this.logisticStateController,
+    required this.onPressed,
+    required this.isLoading,
+  });
 
   @override
   State<AddLogisticForm> createState() => _AddLogisticFormState();
@@ -30,7 +48,7 @@ class _AddLogisticFormState extends State<AddLogisticForm> {
               ),
               const SizedBox(height: 15),
               AppTextField(
-                controller: TextEditingController(),
+                controller: widget.logisticNameController,
                 hintText: "Logistic Name",
                 prefixIcon: Icons.person,
                 keyboardType: TextInputType.text,
@@ -40,7 +58,7 @@ class _AddLogisticFormState extends State<AddLogisticForm> {
                 children: [
                   Expanded(
                     child: AppTextField(
-                      controller: TextEditingController(),
+                      controller: widget.logisticStateController,
                       hintText: "State",
                       prefixIcon: Icons.location_on,
                       keyboardType: TextInputType.text,
@@ -49,7 +67,7 @@ class _AddLogisticFormState extends State<AddLogisticForm> {
                   const SizedBox(width: 20),
                   Expanded(
                     child: AppTextField(
-                      controller: TextEditingController(),
+                      controller: widget.logisticStateCode,
                       hintText: "State Code",
                       prefixIcon: Icons.pin,
                       keyboardType: TextInputType.number,
@@ -62,7 +80,7 @@ class _AddLogisticFormState extends State<AddLogisticForm> {
                 children: [
                   Expanded(
                     child: AppTextField(
-                      controller: TextEditingController(),
+                      controller: widget.logisticPhone,
                       hintText: "Phone",
                       prefixIcon: Icons.phone,
                       keyboardType: TextInputType.number,
@@ -71,7 +89,7 @@ class _AddLogisticFormState extends State<AddLogisticForm> {
                   const SizedBox(width: 20),
                   Expanded(
                     child: AppTextField(
-                      controller: TextEditingController(),
+                      controller: widget.logisticGstController,
                       hintText: "GSTIN",
                       prefixIcon: Icons.password_rounded,
                       keyboardType: TextInputType.text,
@@ -81,14 +99,15 @@ class _AddLogisticFormState extends State<AddLogisticForm> {
               ),
               const SizedBox(height: 15),
               AppTextFieldMultiline(
-                controller: TextEditingController(),
+                controller: widget.logisticAddressController,
                 hintText: "Logistic Address",
                 keyboardType: TextInputType.text,
                 maxLines: 3,
               ),
               const SizedBox(height: 15),
               AppFilledButton(
-                onPressed: () {},
+                isLoading: widget.isLoading,
+                onPressed: widget.onPressed,
                 buttonText: "Submit",
               )
             ],

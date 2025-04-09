@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () {}, icon: Icon(Icons.person)),
+        leading: Icon(Icons.home),
         title: Text("Home"),
       ),
       body: Center(
@@ -82,24 +82,46 @@ class HomePage extends StatelessWidget {
                   ),
                   children: [
                     GridCard(
+                      onPressed: (){
+                        Navigator.pushNamed(context, "/logistics");
+                      },
                       icon: Icons.fire_truck_outlined,
                       cardName: "Logistics",
                     ),
                     GridCard(
+                      onPressed: (){
+                        Navigator.pushNamed(context, "/customers");
+                      },
                       icon: Icons.people_outline_rounded,
                       cardName: "Customers",
                     ),
                     GridCard(
+                      onPressed: (){
+                        Navigator.pushNamed(context, "/firms");
+                      },
                       icon: Icons.account_balance_outlined,
                       cardName: "Agencies",
                     ),
                     GridCard(
+                      onPressed: (){
+                        Navigator.pushNamed(context, "/banks");
+                      },
                       icon: Icons.currency_rupee_rounded,
                       cardName: "Bank",
                     ),
                     GridCard(
+                      onPressed: (){
+                        Navigator.pushNamed(context, "/history");
+                      },
                       icon: Icons.history,
                       cardName: "History",
+                    ),
+                    GridCard(
+                      onPressed: (){
+                        Navigator.pushNamed(context, "/settings");
+                      },
+                      icon: Icons.settings_outlined,
+                      cardName: "Settings",
                     ),
                   ],
                 ),

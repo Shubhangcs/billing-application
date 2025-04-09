@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_billing/features/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:new_billing/features/authentication/presentation/cubit/auto_login_cubit.dart';
 import 'package:new_billing/features/authentication/presentation/pages/login.dart';
 import 'package:new_billing/features/authentication/presentation/pages/register.dart';
 import 'package:new_billing/features/billing/bloc/invoice_bloc.dart';
@@ -16,18 +17,34 @@ import 'package:new_billing/features/history/presentation/pages/history_page.dar
 import 'package:new_billing/features/home/pages/home.dart';
 import 'package:new_billing/features/customer/presentation/bloc/customer_bloc.dart';
 import 'package:new_billing/features/customer/presentation/pages/customer_page.dart';
-import 'package:new_billing/features/logistic/presentation/bloc/shipper_bloc.dart';
+import 'package:new_billing/features/logistic/presentation/cubit/add_logistic_cubit.dart';
+import 'package:new_billing/features/logistic/presentation/cubit/delete_logistic_cubit.dart';
+import 'package:new_billing/features/logistic/presentation/cubit/fetch_logistic_cubit.dart';
 import 'package:new_billing/features/logistic/presentation/pages/logistics_page.dart';
+import 'package:new_billing/features/splash/presentation/page/splash_screen.dart';
 import 'package:new_billing/init_dependencies.dart';
 
 class Routes {
   static Route? onGenerate(RouteSettings settings) {
+    const String splash = "/splash";
     const String login = "/login";
     const String register = "/register";
+    const String home = "/home";
     const String history = "/history";
     const String logistics = "/logistics";
-    const String firm = "/firm";
+    const String firms = "/firms";
+    const String customers = "/customers";
+
+    const String billing = "/billing";
+    const String products = "/products";
     switch (settings.name) {
+      case splash:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => serviceLocator<AutoLoginCubit>(),
+            child: SplashScreen(),
+          ),
+        );
       case login:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
@@ -44,12 +61,12 @@ class Routes {
           ),
         );
 
-      case "/home":
+      case home:
         return MaterialPageRoute(
           builder: (context) => HomePage(),
         );
 
-      case "/billing":
+      case billing:
         return MaterialPageRoute(
           builder: (context) => MultiBlocProvider(
             providers: [
@@ -64,7 +81,7 @@ class Routes {
           ),
         );
 
-      case "/products":
+      case products:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
             create: (context) => ProductsBloc(),
@@ -91,7 +108,7 @@ class Routes {
           ),
         );
 
-      case "/customer":
+      case customers:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
             create: (context) => CustomerBloc(),
@@ -100,12 +117,22 @@ class Routes {
         );
       case logistics:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => ShipperBloc(),
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => serviceLocator<FetchLogisticCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => serviceLocator<DeleteLogisticCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => serviceLocator<AddLogisticCubit>(),
+              ),
+            ],
             child: LogisticsPage(),
           ),
         );
-      case firm:
+      case firms:
         return MaterialPageRoute(
           builder: (context) => FirmPage(),
         );

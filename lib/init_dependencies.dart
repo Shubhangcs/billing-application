@@ -5,9 +5,11 @@ import 'package:new_billing/features/authentication/data/datasources/auth_local_
 import 'package:new_billing/features/authentication/data/datasources/auth_remote_data_source.dart';
 import 'package:new_billing/features/authentication/data/repository/auth_repository_impl.dart';
 import 'package:new_billing/features/authentication/domain/repository/auth_repository.dart';
+import 'package:new_billing/features/authentication/domain/usecases/auto_login_usecase.dart';
 import 'package:new_billing/features/authentication/domain/usecases/login_usecase.dart';
 import 'package:new_billing/features/authentication/domain/usecases/register_usecase.dart';
 import 'package:new_billing/features/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:new_billing/features/authentication/presentation/cubit/auto_login_cubit.dart';
 import 'package:new_billing/features/history/data/datasource/history_local_data_source.dart';
 import 'package:new_billing/features/history/data/datasource/history_remote_data_source.dart';
 import 'package:new_billing/features/history/data/repository/history_repository_impl.dart';
@@ -18,6 +20,16 @@ import 'package:new_billing/features/history/domain/usecases/update_payment_stat
 import 'package:new_billing/features/history/presentation/bloc/history_bloc.dart';
 import 'package:new_billing/features/history/presentation/cubit/delete_invoice_cubit.dart';
 import 'package:new_billing/features/history/presentation/cubit/payment_status_updater_cubit.dart';
+import 'package:new_billing/features/logistic/data/datasource/logistic_local_data_source.dart';
+import 'package:new_billing/features/logistic/data/datasource/logistic_remote_data_source.dart';
+import 'package:new_billing/features/logistic/data/repository/logistic_repository_impl.dart';
+import 'package:new_billing/features/logistic/domain/repository/logistic_repository.dart';
+import 'package:new_billing/features/logistic/domain/usecases/add_logistic_usecase.dart';
+import 'package:new_billing/features/logistic/domain/usecases/delete_logistic_usecase.dart';
+import 'package:new_billing/features/logistic/domain/usecases/fetch_logistic_usecase.dart';
+import 'package:new_billing/features/logistic/presentation/cubit/add_logistic_cubit.dart';
+import 'package:new_billing/features/logistic/presentation/cubit/delete_logistic_cubit.dart';
+import 'package:new_billing/features/logistic/presentation/cubit/fetch_logistic_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 

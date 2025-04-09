@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_billing/core/themes/colors.dart';
 import 'package:new_billing/core/widgets/app_delete_confirmation_bottom_sheet.dart';
+import 'package:new_billing/core/widgets/app_empty_widget.dart';
 import 'package:new_billing/core/widgets/app_error_widget.dart';
 import 'package:new_billing/core/widgets/app_snack_bar.dart';
 import 'package:new_billing/features/history/presentation/bloc/history_bloc.dart';
@@ -150,6 +151,17 @@ class _HistoryPageState extends State<HistoryPage> {
             if (state is FetchInvoiceHistoryFailedState) {
               return AppErrorWidget(
                 errorMessage: state.message,
+                onPressed: () {
+                  BlocProvider.of<HistoryBloc>(context).add(
+                    FetchInvoiceHistoryEvent(),
+                  );
+                },
+              );
+            }
+            if (state is FetchInvoiceHistorySuccessState &&
+                state.invoices.isEmpty) {
+              return AppEmptyWidget(
+                errorMessage: "Nothing To Display.",
                 onPressed: () {
                   BlocProvider.of<HistoryBloc>(context).add(
                     FetchInvoiceHistoryEvent(),

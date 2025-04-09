@@ -132,6 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 20,
                     ),
                     AppTextField(
+                      isPasswordField: true,
                       controller: _passwordController,
                       hintText: "Password",
                       prefixIcon: Icons.password_rounded,

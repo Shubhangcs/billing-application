@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_billing/core/themes/colors.dart';
 
-class AppErrorWidget extends StatelessWidget {
+class AppEmptyWidget extends StatelessWidget {
   final String errorMessage;
   final VoidCallback onPressed;
-  const AppErrorWidget({
+  const AppEmptyWidget({
     super.key,
     required this.errorMessage,
     required this.onPressed,
@@ -18,7 +18,7 @@ class AppErrorWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
-            Icons.error_outline_rounded,
+            Icons.data_array_rounded,
             size: 60,
             color: AppColors.blue,
           ),

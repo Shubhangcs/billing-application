@@ -6,6 +6,7 @@ abstract interface class AuthLocalDataSource {
   String saveCredentials({
     required String token,
   });
+  String? autoLogin();
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
@@ -23,5 +24,11 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
         message: "Exception while Storing the Data Locally.",
       );
     }
+  }
+  
+  @override
+  String? autoLogin() {
+    final token = box.get("token");
+    return token;
   }
 }

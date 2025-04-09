@@ -1,5 +1,5 @@
 class AppUrls{
-  static const String url = "https://apmc.api.vsensetech.in";
+  static const String url = "https://apmc.http.vithsutra.com";
   static const String login = "$url/login";
   static const String register = "$url/create/user";
   static const String addShipper = "$url/create/consignee";
@@ -13,4 +13,5 @@ class AppUrls{
   static const String makePayment = "$url/update/invoice/payment";
   static const String deleteInvoice = "$url/delete/invoice";
   static const String downloadInvoice = "$url/download/invoice";
+  static const String deleteConsignee = "$url/delete/consignee";
 }

@@ -122,6 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: "Password",
                       prefixIcon: Icons.password_rounded,
                       keyboardType: TextInputType.text,
+                      isPasswordField: true,
                     ),
                     SizedBox(
                       height: 10,

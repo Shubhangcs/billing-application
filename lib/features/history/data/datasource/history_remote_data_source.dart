@@ -36,8 +36,12 @@ class HistoryRemoteDataSourceImpl implements HistoryRemoteDataSource {
         headers: {"Content-Type": "application/json"},
       );
       final response = jsonDecode(jsonResponse.body);
+      print(response);
       if (jsonResponse.statusCode != 200) {
         throw ServerException(message: response["message"]);
+      }
+      if (response["invoices"] == null) {
+        return <HistoryModel>[];
       }
       final List<HistoryModel> history = (response["invoices"] as List)
           .map((ele) => HistoryModel.fromJson(ele))

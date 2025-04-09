@@ -61,4 +61,14 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(Failure(message: "Exception while Processing the Request."));
     }
   }
+
+  @override
+  Future<Either<Failure, String?>> autoLogin() async {
+    try {
+      final token = authLocalDataSource.autoLogin();
+      return Right(token);
+    } catch (e) {
+      return Left(Failure(message: "Exception while Processing the Request."));
+    }
+  }
 }

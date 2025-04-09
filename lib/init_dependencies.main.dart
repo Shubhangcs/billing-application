@@ -6,6 +6,7 @@ Future<void> initDependancies() async {
   await _initHive();
   _initAuth();
   _initHistory();
+  _initLogistic();
   serviceLocator.registerLazySingleton(() => Connection());
   serviceLocator.registerLazySingleton(() => http.Client());
 }
@@ -47,9 +48,19 @@ void _initAuth() {
       ),
     )
     ..registerLazySingleton(
+      () => AutoLoginUsecase(
+        authRepository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
       () => AuthBloc(
         loginUsecase: serviceLocator(),
         registerUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => AutoLoginCubit(
+        autoLoginUsecase: serviceLocator(),
       ),
     );
 }
@@ -99,6 +110,56 @@ void _initHistory() {
     ..registerFactory(
       () => PaymentStatusUpdaterCubit(
         updatePaymentStatusUsecase: serviceLocator(),
+      ),
+    );
+}
+
+void _initLogistic() {
+  serviceLocator
+    ..registerFactory<LogisticRemoteDataSource>(
+      () => LogisticRemoteDataSourceImpl(
+        client: serviceLocator(),
+        connection: serviceLocator(),
+      ),
+    )
+    ..registerFactory<LogisticLocalDataSource>(
+        () => LogisticLocalDataSourceImpl(
+              box: serviceLocator(),
+            ))
+    ..registerLazySingleton<LogisticRepository>(
+      () => LogisticRepositoryImpl(
+        logisticLocalDataSource: serviceLocator(),
+        logisticRemoteDataSource: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => FetchLogisticUsecase(
+        logisticRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => DeleteLogisticUsecase(
+        logisticRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => AddLogisticUsecase(
+        logisticRepository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => FetchLogisticCubit(
+        fetchLogisticUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => DeleteLogisticCubit(
+        deleteLogisticUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => AddLogisticCubit(
+        addLogisticUsecase: serviceLocator(),
       ),
     );
 }
