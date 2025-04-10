@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:new_billing/features/firm/domain/entities/firm_entity.dart';
 
 class FirmModel extends FirmEntity {

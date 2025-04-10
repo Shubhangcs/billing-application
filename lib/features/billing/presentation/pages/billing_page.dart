@@ -257,7 +257,7 @@ class _BillingPageState extends State<BillingPage> {
                                       SubmitInvoiceEvent(
                                         customerId: _billedToController.text,
                                         invoiceChallanNo:
-                                            _chalanNoController.text ?? " ",
+                                            _chalanNoController.text,
                                         invoiceDateOfSupply:
                                             _dateController.text,
                                         invoiceName:
@@ -271,7 +271,7 @@ class _BillingPageState extends State<BillingPage> {
                                         invoiceStateCode:
                                             _invoiceStateCodeController.text,
                                         invoiceVehicleNo:
-                                            _vehicleNoController.text ?? " ",
+                                            _vehicleNoController.text,
                                         shipperId: _shippedByController.text,
                                       ),
                                     );
