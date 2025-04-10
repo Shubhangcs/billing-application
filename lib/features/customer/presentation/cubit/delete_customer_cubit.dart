@@ -14,6 +14,7 @@ class DeleteCustomerCubit extends Cubit<DeleteCustomerState> {
   Future<void> deleteCustomer({
     required String customerId,
   }) async {
+    emit(DeleteCustomerLoadingState());
     final response = await _deleteCustomerUsecase(
       DeleteCustomerParams(
         customerId: customerId,

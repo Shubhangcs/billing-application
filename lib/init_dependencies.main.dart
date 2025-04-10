@@ -7,6 +7,7 @@ Future<void> initDependancies() async {
   _initAuth();
   _initHistory();
   _initLogistic();
+  _initCustomer();
   serviceLocator.registerLazySingleton(() => Connection());
   serviceLocator.registerLazySingleton(() => http.Client());
 }
@@ -160,6 +161,56 @@ void _initLogistic() {
     ..registerFactory(
       () => AddLogisticCubit(
         addLogisticUsecase: serviceLocator(),
+      ),
+    );
+}
+
+void _initCustomer() {
+  serviceLocator
+    ..registerFactory<CustomerRemoteDataSource>(
+      () => CustomerRemoteDataSourceImpl(
+        client: serviceLocator(),
+        connection: serviceLocator(),
+      ),
+    )
+    ..registerFactory<CustomerLocalDatasource>(
+        () => CustomerLocalDatasourceImpl(
+              box: serviceLocator(),
+            ))
+    ..registerLazySingleton<CustomerRepository>(
+      () => CustomerRepositoryImpl(
+        customerLocalDataSource: serviceLocator(),
+        customerRemoteDataSource: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => FetchCustomerUsecase(
+        customerRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => DeleteCustomerUsecase(
+        customerRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => AddCustomerUsecase(
+        customerRepository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => FetchCustomerCubit(
+        fetchCustomerUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => DeleteCustomerCubit(
+        deleteCustomerUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => AddCustomerCubit(
+        addCustomerUsecase: serviceLocator(),
       ),
     );
 }

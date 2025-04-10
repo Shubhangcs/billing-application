@@ -13,6 +13,7 @@ class FetchCustomerCubit extends Cubit<FetchCustomerState> {
         super(FetchCustomerInitial());
 
   Future<void> fetchCustomers() async {
+    emit(FetchCustomerLoadingState());
     final response = await _fetchCustomerUsecase(
       FetchCustomerParams(),
     );

@@ -156,12 +156,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_billing/core/widgets/app_delete_confirmation_bottom_sheet.dart';
 import 'package:new_billing/core/widgets/app_empty_widget.dart';
 import 'package:new_billing/core/widgets/app_error_widget.dart';
+import 'package:new_billing/core/widgets/app_snack_bar.dart';
 import 'package:new_billing/features/customer/presentation/cubit/add_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/cubit/delete_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/cubit/fetch_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/widgets/add_customer_form.dart';
 import 'package:new_billing/features/customer/presentation/widgets/customer_page_loading_widget.dart';
 import 'package:new_billing/features/customer/presentation/widgets/customer_tile.dart';
+import 'package:new_billing/init_dependencies.dart';
 
 class CustomerPage extends StatefulWidget {
   const CustomerPage({super.key});
@@ -191,25 +193,61 @@ class _CustomerPageState extends State<CustomerPage> {
     BlocProvider.of<FetchCustomerCubit>(context).fetchCustomers();
   }
 
+  void _clearControllers() {
+    _customerNameController.clear();
+    _customerAddressController.clear();
+    _customerGstInController.clear();
+    _customerStateController.clear();
+    _customerStateCodeController.clear();
+  }
+
   void _showAddCustomerBottomsheet() {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (context) => AddCustomerForm(
-        customerNameController: _customerNameController,
-        customerAddressController: _customerAddressController,
-        customerGstInController: _customerGstInController,
-        customerStateController: _customerStateController,
-        customerStateCodeController: _customerStateCodeController,
-        onPressed: () {
-          BlocProvider.of<AddCustomerCubit>(context).addCustomer(
-            customerName: _customerNameController.text,
-            customerAddress: _customerAddressController.text,
-            customerGstNumber: _customerGstInController.text,
-            customerState: _customerStateController.text,
-            customerStateCode: _customerStateCodeController.text,
-          );
-        },
+      builder: (context) => BlocProvider(
+        create: (context) => serviceLocator<AddCustomerCubit>(),
+        child: BlocBuilder<AddCustomerCubit, AddCustomerState>(
+          builder: (context, state) {
+            return BlocListener<AddCustomerCubit, AddCustomerState>(
+              listener: (context, state) {
+                if (state is AddCustomerSuccessState) {
+                  Navigator.pop(context);
+                  _fetchCustomers();
+                  _clearControllers();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    AppSnackBar(message: state.message).build(context),
+                  );
+                }
+                if (state is AddCustomerFailureState) {
+                  Navigator.pop(context);
+                  _fetchCustomers();
+                  _clearControllers();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    AppSnackBar(message: state.message).build(context),
+                  );
+                }
+              },
+              child: AddCustomerForm(
+                customerNameController: _customerNameController,
+                customerAddressController: _customerAddressController,
+                customerGstInController: _customerGstInController,
+                customerStateController: _customerStateController,
+                customerStateCodeController: _customerStateCodeController,
+                isLoading: state is AddCustomerLoadingState,
+                onPressed: () {
+                  BlocProvider.of<AddCustomerCubit>(context).addCustomer(
+                    customerName: _customerNameController.text,
+                    customerAddress: _customerAddressController.text,
+                    customerGstNumber: _customerGstInController.text,
+                    customerState: _customerStateController.text,
+                    customerStateCode: _customerStateCodeController.text,
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -222,14 +260,40 @@ class _CustomerPageState extends State<CustomerPage> {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (context) => AppDeleteConfirmationBottomSheet(
-        title: customerName,
-        subtitle: customerAddress,
-        onDeletePressed: () {
-          BlocProvider.of<DeleteCustomerCubit>(context).deleteCustomer(
-            customerId: customerId,
-          );
-        },
+      builder: (context) => BlocProvider(
+        create: (context) => serviceLocator<DeleteCustomerCubit>(),
+        child: BlocBuilder<DeleteCustomerCubit, DeleteCustomerState>(
+          builder: (context, state) {
+            return BlocListener<DeleteCustomerCubit, DeleteCustomerState>(
+              listener: (context, state) {
+                if (state is DeleteCustomerSuccessState) {
+                  Navigator.pop(context);
+                  _fetchCustomers();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    AppSnackBar(message: state.message).build(context),
+                  );
+                }
+                if (state is DeleteCustomerFailureState) {
+                  Navigator.pop(context);
+                  _fetchCustomers();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    AppSnackBar(message: state.message).build(context),
+                  );
+                }
+              },
+              child: AppDeleteConfirmationBottomSheet(
+                isLoading: state is DeleteCustomerLoadingState,
+                title: customerName,
+                subtitle: customerAddress,
+                onDeletePressed: () {
+                  BlocProvider.of<DeleteCustomerCubit>(context).deleteCustomer(
+                    customerId: customerId,
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -258,13 +322,17 @@ class _CustomerPageState extends State<CustomerPage> {
           if (state is FetchCustomerFailureState) {
             return AppErrorWidget(
               errorMessage: state.message,
-              onPressed: () {},
+              onPressed: () {
+                _fetchCustomers();
+              },
             );
           }
           if (state is FetchCustomerSuccessState && state.customers.isEmpty) {
             return AppEmptyWidget(
               errorMessage: "No Customres To Display",
-              onPressed: () {},
+              onPressed: () {
+                _fetchCustomers();
+              },
             );
           }
           if (state is FetchCustomerSuccessState) {

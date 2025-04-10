@@ -3,7 +3,7 @@ class AppUrls{
   static const String login = "$url/login";
   static const String register = "$url/create/user";
   static const String addShipper = "$url/create/consignee";
-  static const String addCustomer = "$url/create/receiver";
+  static const String addReciver = "$url/create/receiver";
   static const String fetchInvoices = "$url/get/invoices";
   static const String getReceivers = "$url/get/receivers";
   static const String getConsignees = "$url/get/consignees";
@@ -14,4 +14,5 @@ class AppUrls{
   static const String deleteInvoice = "$url/delete/invoice";
   static const String downloadInvoice = "$url/download/invoice";
   static const String deleteConsignee = "$url/delete/consignee";
+  static const String deleteRecivers = "$url/delete/receiver";
 }

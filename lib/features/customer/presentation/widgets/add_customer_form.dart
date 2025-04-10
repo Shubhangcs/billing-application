@@ -10,6 +10,7 @@ class AddCustomerForm extends StatefulWidget {
   final TextEditingController customerGstInController;
   final TextEditingController customerAddressController;
   final VoidCallback onPressed;
+  final bool isLoading;
   const AddCustomerForm({
     super.key,
     required this.customerNameController,
@@ -18,6 +19,7 @@ class AddCustomerForm extends StatefulWidget {
     required this.customerStateController,
     required this.customerStateCodeController,
     required this.onPressed,
+    this.isLoading = false,
   });
 
   @override
@@ -91,6 +93,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
               ),
               const SizedBox(height: 15),
               AppFilledButton(
+                isLoading: widget.isLoading,
                 onPressed: widget.onPressed,
                 buttonText: "Submit",
               )

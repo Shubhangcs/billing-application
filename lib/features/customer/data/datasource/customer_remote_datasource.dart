@@ -32,7 +32,7 @@ class CustomerRemoteDataSourceImpl implements CustomerRemoteDataSource {
         throw ServerException(message: "Not Connected to Internet.");
       }
       final jsonResponse = await client.post(
-        Uri.parse(AppUrls.addShipper),
+        Uri.parse(AppUrls.addReciver),
         body: jsonEncode(customerModel.toJson()),
         headers: {"Content-Type": "application/json"},
       );
@@ -59,18 +59,18 @@ class CustomerRemoteDataSourceImpl implements CustomerRemoteDataSource {
         throw ServerException(message: "Not Connected To Internet.");
       }
       final jsonResponse = await client.get(
-        Uri.parse("${AppUrls.getConsignees}/$userId"),
+        Uri.parse("${AppUrls.getReceivers}/$userId"),
         headers: {"Content-Type": "application/json"},
       );
       final response = jsonDecode(jsonResponse.body);
       if (jsonResponse.statusCode != 200) {
         throw ServerException(message: response["message"]);
       }
-      if (response["reciver_details"] == null) {
+      if (response["receiver_details"] == null) {
         return <CustomerModel>[];
       }
       final List<CustomerModel> customer =
-          (response["reciver_details"] as List)
+          (response["receiver_details"] as List)
               .map((ele) => CustomerModel.fromJson(ele))
               .toList();
       return customer;
@@ -92,7 +92,7 @@ class CustomerRemoteDataSourceImpl implements CustomerRemoteDataSource {
         throw ServerException(message: "Not Connected To Internet.");
       }
       final jsonResponse = await client.delete(
-        Uri.parse("${AppUrls.deleteConsignee}/$customerId"),
+        Uri.parse("${AppUrls.deleteRecivers}/$customerId"),
         headers: {"Content-Type": "application/json"},
       );
       final response = jsonDecode(jsonResponse.body);

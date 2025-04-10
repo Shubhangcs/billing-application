@@ -9,6 +9,9 @@ import 'package:new_billing/features/billing/bloc/invoice_details_bloc.dart';
 import 'package:new_billing/features/billing/bloc/products_bloc.dart';
 import 'package:new_billing/features/billing/pages/billing_page.dart';
 import 'package:new_billing/features/billing/pages/product_page.dart';
+import 'package:new_billing/features/customer/presentation/cubit/add_customer_cubit.dart';
+import 'package:new_billing/features/customer/presentation/cubit/delete_customer_cubit.dart';
+import 'package:new_billing/features/customer/presentation/cubit/fetch_customer_cubit.dart';
 import 'package:new_billing/features/firm/presentation/pages/firm_page.dart';
 import 'package:new_billing/features/history/presentation/bloc/history_bloc.dart';
 import 'package:new_billing/features/history/presentation/cubit/delete_invoice_cubit.dart';
@@ -110,7 +113,17 @@ class Routes {
       case customers:
         return MaterialPageRoute(
           builder: (context) => MultiBlocProvider(
-            providers: [],
+            providers: [
+              BlocProvider(
+                create: (context) => serviceLocator<AddCustomerCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => serviceLocator<DeleteCustomerCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => serviceLocator<FetchCustomerCubit>(),
+              ),
+            ],
             child: CustomerPage(),
           ),
         );

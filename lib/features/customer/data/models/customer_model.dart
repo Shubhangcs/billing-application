@@ -13,23 +13,23 @@ class CustomerModel extends CustomerEntity {
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) {
     return CustomerModel(
-      customerId: json["reciver_id"],
-      customerName: json["reciver_name"],
-      customerAddress: json["reciver_address"],
-      customerGstNumber: json["reciver_gstin"],
-      customerState: json["reciver_state"],
-      customerStateCode: json["reciver_state_code"],
+      customerId: json["receiver_id"],
+      customerName: json["receiver_name"],
+      customerAddress: json["receiver_address"],
+      customerGstNumber: json["receiver_gstin"],
+      customerState: json["receiver_state"],
+      customerStateCode: json["receiver_state_code"],
       userId: json["user_id"],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "reciver_name": customerName,
-      "reciver_address": customerAddress,
-      "reciver_gstin": customerGstNumber,
-      "reciver_state": customerState,
-      "reciver_state_code": customerStateCode,
+      "receiver_name": customerName,
+      "receiver_address": customerAddress,
+      "receiver_gstin": customerGstNumber,
+      "receiver_state": customerState,
+      "receiver_state_code": customerStateCode,
       "user_id": userId,
     };
   }

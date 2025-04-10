@@ -17,6 +17,7 @@ class AddCustomerCubit extends Cubit<AddCustomerState> {
     required String customerState,
     required String customerStateCode,
   }) async {
+    emit(AddCustomerLoadingState());
     final response = await _addCustomerUsecase(
       AddCustomerParams(
         customerAddress: customerAddress,
