@@ -15,4 +15,7 @@ class AppUrls{
   static const String downloadInvoice = "$url/download/invoice";
   static const String deleteConsignee = "$url/delete/consignee";
   static const String deleteRecivers = "$url/delete/receiver";
+  static const String addBank = "$url/create/banker";
+  static const String getBank = "$url/get/bankers";
+  static const String deleteBank = "$url/delete/banker";
 }

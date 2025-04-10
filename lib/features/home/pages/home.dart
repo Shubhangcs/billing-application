@@ -82,42 +82,42 @@ class HomePage extends StatelessWidget {
                   ),
                   children: [
                     GridCard(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pushNamed(context, "/logistics");
                       },
                       icon: Icons.fire_truck_outlined,
                       cardName: "Logistics",
                     ),
                     GridCard(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pushNamed(context, "/customers");
                       },
                       icon: Icons.people_outline_rounded,
                       cardName: "Customers",
                     ),
                     GridCard(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pushNamed(context, "/firms");
                       },
                       icon: Icons.account_balance_outlined,
-                      cardName: "Agencies",
+                      cardName: "Firms",
                     ),
                     GridCard(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pushNamed(context, "/banks");
                       },
                       icon: Icons.currency_rupee_rounded,
                       cardName: "Bank",
                     ),
                     GridCard(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pushNamed(context, "/history");
                       },
                       icon: Icons.history,
                       cardName: "History",
                     ),
                     GridCard(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pushNamed(context, "/settings");
                       },
                       icon: Icons.settings_outlined,

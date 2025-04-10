@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:new_billing/core/widgets/app_filled_button.dart';
 import 'package:new_billing/core/widgets/app_text_field.dart';
 import 'package:new_billing/core/widgets/app_text_field_multiline.dart';
@@ -11,6 +14,18 @@ class AddFirmForm extends StatefulWidget {
 }
 
 class _AddFirmFormState extends State<AddFirmForm> {
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,6 +42,25 @@ class _AddFirmFormState extends State<AddFirmForm> {
               Text(
                 "Firm",
                 style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 15),
+              GestureDetector(
+                onTap: () {
+                  _pickImage(ImageSource.gallery);
+                },
+                child: Center(
+                  child: Container(
+                    child: _image == null
+                        ? Image.asset(
+                            "assets/image.png",
+                            width: 100,
+                          )
+                        : Image.file(
+                            _image!,
+                            width: 100,
+                          ),
+                  ),
+                ),
               ),
               const SizedBox(height: 15),
               AppTextField(

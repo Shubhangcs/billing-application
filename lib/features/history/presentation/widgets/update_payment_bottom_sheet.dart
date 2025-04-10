@@ -23,7 +23,6 @@ class UpdatePaymentBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(20),
-      height: 300,
       width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -37,7 +36,7 @@ class UpdatePaymentBottomSheet extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 15,
           ),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -51,12 +50,16 @@ class UpdatePaymentBottomSheet extends StatelessWidget {
                 ListTile(
                   title: Text(
                     invoiceName,
-                    style: Theme.of(context).textTheme.labelLarge,
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
                     overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: Text(
                     invoiceId,
-                    style: Theme.of(context).textTheme.labelMedium,
+                    style: Theme.of(context).textTheme.labelSmall,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   leading: Icon(
                     Icons.insert_drive_file,

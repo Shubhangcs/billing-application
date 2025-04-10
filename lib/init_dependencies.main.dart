@@ -8,6 +8,7 @@ Future<void> initDependancies() async {
   _initHistory();
   _initLogistic();
   _initCustomer();
+  _initBank();
   serviceLocator.registerLazySingleton(() => Connection());
   serviceLocator.registerLazySingleton(() => http.Client());
 }
@@ -211,6 +212,55 @@ void _initCustomer() {
     ..registerFactory(
       () => AddCustomerCubit(
         addCustomerUsecase: serviceLocator(),
+      ),
+    );
+}
+
+void _initBank() {
+  serviceLocator
+    ..registerFactory<BankRemoteDataSource>(
+      () => BankRemoteDataSourceImpl(
+        client: serviceLocator(),
+        connection: serviceLocator(),
+      ),
+    )
+    ..registerFactory<BankLocalDataSource>(() => BankLocalDataSourceImpl(
+          box: serviceLocator(),
+        ))
+    ..registerLazySingleton<BankRepository>(
+      () => BankRepositoryImpl(
+        bankLocalDataSource: serviceLocator(),
+        bankRemoteDataSource: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => FetchBankUsecase(
+        bankRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => DeleteBankUsecase(
+        bankRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => AddBankUsecase(
+        bankRepository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => FetchBankCubit(
+        fetchBankUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => DeleteBankCubit(
+        deleteBankUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => AddBankCubit(
+        addBankUsecase: serviceLocator(),
       ),
     );
 }

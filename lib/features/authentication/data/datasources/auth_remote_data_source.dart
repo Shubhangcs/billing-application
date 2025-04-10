@@ -28,11 +28,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         headers: {"Content-Type": "application/json"},
       );
       final response = jsonDecode(jsonResponse.body);
-      print(response);
       if (jsonResponse.statusCode != 200) {
-        throw ServerException(message: response["message"]);
+        throw ServerException(message: response["error"]);
       }
-      return response["token"];
+      return response["data"]["token"];
     } on ServerException catch (e) {
       throw ServerException(message: e.message);
     } catch (e) {
@@ -57,7 +56,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (jsonResponse.statusCode != 200) {
         throw ServerException(message: response["error"]);
       }
-      return response["token"];
+      return response["data"]["token"];
     } on ServerException catch (e) {
       throw ServerException(message: e.message);
     } catch (e) {

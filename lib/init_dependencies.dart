@@ -10,6 +10,16 @@ import 'package:new_billing/features/authentication/domain/usecases/login_usecas
 import 'package:new_billing/features/authentication/domain/usecases/register_usecase.dart';
 import 'package:new_billing/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:new_billing/features/authentication/presentation/cubit/auto_login_cubit.dart';
+import 'package:new_billing/features/bank/data/datasource/bank_local_datasource.dart';
+import 'package:new_billing/features/bank/data/datasource/bank_remote_datasource.dart';
+import 'package:new_billing/features/bank/data/repository/bank_repository_impl.dart';
+import 'package:new_billing/features/bank/domain/repository/bank_repository.dart';
+import 'package:new_billing/features/bank/domain/usecases/add_bank_usecase.dart';
+import 'package:new_billing/features/bank/domain/usecases/delete_bank_usecase.dart';
+import 'package:new_billing/features/bank/domain/usecases/fetch_bank_usecase.dart';
+import 'package:new_billing/features/bank/presentation/cubit/add_bank_cubit.dart';
+import 'package:new_billing/features/bank/presentation/cubit/delete_bank_cubit.dart';
+import 'package:new_billing/features/bank/presentation/cubit/fetch_bank_cubit.dart';
 import 'package:new_billing/features/customer/data/datasource/customer_local_datasource.dart';
 import 'package:new_billing/features/customer/data/datasource/customer_remote_datasource.dart';
 import 'package:new_billing/features/customer/data/repository/customer_repository_impl.dart';

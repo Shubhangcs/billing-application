@@ -4,6 +4,10 @@ import 'package:new_billing/features/authentication/presentation/bloc/auth_bloc.
 import 'package:new_billing/features/authentication/presentation/cubit/auto_login_cubit.dart';
 import 'package:new_billing/features/authentication/presentation/pages/login.dart';
 import 'package:new_billing/features/authentication/presentation/pages/register.dart';
+import 'package:new_billing/features/bank/presentation/cubit/add_bank_cubit.dart';
+import 'package:new_billing/features/bank/presentation/cubit/delete_bank_cubit.dart';
+import 'package:new_billing/features/bank/presentation/cubit/fetch_bank_cubit.dart';
+import 'package:new_billing/features/bank/presentation/pages/bank_page.dart';
 import 'package:new_billing/features/billing/bloc/invoice_bloc.dart';
 import 'package:new_billing/features/billing/bloc/invoice_details_bloc.dart';
 import 'package:new_billing/features/billing/bloc/products_bloc.dart';
@@ -39,6 +43,7 @@ class Routes {
 
     const String billing = "/billing";
     const String products = "/products";
+    const String banks = "/banks";
     switch (settings.name) {
       case splash:
         return MaterialPageRoute(
@@ -60,6 +65,24 @@ class Routes {
           builder: (context) => BlocProvider(
             create: (context) => serviceLocator<AuthBloc>(),
             child: RegisterPage(),
+          ),
+        );
+
+      case banks:
+        return MaterialPageRoute(
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => serviceLocator<FetchBankCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => serviceLocator<AddBankCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => serviceLocator<DeleteBankCubit>(),
+              ),
+            ],
+            child: BankPage(),
           ),
         );
 
