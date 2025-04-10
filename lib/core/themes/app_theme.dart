@@ -18,12 +18,6 @@ class AppTheme {
   ).copyWith(
     scaffoldBackgroundColor: AppColors.white,
     appBarTheme: AppBarTheme(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-        ),
-      ),
       backgroundColor: AppColors.blue,
       iconTheme: const IconThemeData(size: 32, color: AppColors.white),
       actionsIconTheme: const IconThemeData(size: 30),

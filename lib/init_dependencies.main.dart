@@ -9,6 +9,7 @@ Future<void> initDependancies() async {
   _initLogistic();
   _initCustomer();
   _initBank();
+  _initFirm();
   serviceLocator.registerLazySingleton(() => Connection());
   serviceLocator.registerLazySingleton(() => http.Client());
 }
@@ -261,6 +262,55 @@ void _initBank() {
     ..registerFactory(
       () => AddBankCubit(
         addBankUsecase: serviceLocator(),
+      ),
+    );
+}
+
+void _initFirm() {
+  serviceLocator
+    ..registerFactory<FirmRemoteDataSource>(
+      () => FirmRemoteDataSourceImpl(
+        client: serviceLocator(),
+        connection: serviceLocator(),
+      ),
+    )
+    ..registerFactory<FirmLocalDataSource>(() => FirmLocalDataSourceImpl(
+          box: serviceLocator(),
+        ))
+    ..registerLazySingleton<FirmRepository>(
+      () => FirmRepositoryImpl(
+        firmLocalDataSource: serviceLocator(),
+        firmRemoteDataSource: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => FetchFirmUsecase(
+        firmRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => DeleteFirmUsecase(
+        firmRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => AddFirmUsecase(
+        firmRepository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => FetchFirmCubit(
+        fetchFirmUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => DeleteFirmCubit(
+        deleteFirmUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => AddFirmCubit(
+        addFirmUsecase: serviceLocator(),
       ),
     );
 }

@@ -30,6 +30,16 @@ import 'package:new_billing/features/customer/domain/usecases/fetch_customer_use
 import 'package:new_billing/features/customer/presentation/cubit/add_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/cubit/delete_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/cubit/fetch_customer_cubit.dart';
+import 'package:new_billing/features/firm/data/datasource/firm_local_datasource.dart';
+import 'package:new_billing/features/firm/data/datasource/firm_remote_datasource.dart';
+import 'package:new_billing/features/firm/data/repository/firm_repository_impl.dart';
+import 'package:new_billing/features/firm/domain/repository/firm_repository.dart';
+import 'package:new_billing/features/firm/domain/usecases/add_firm_usecase.dart';
+import 'package:new_billing/features/firm/domain/usecases/delete_firm_usecase.dart';
+import 'package:new_billing/features/firm/domain/usecases/fetch_firm_usecase.dart';
+import 'package:new_billing/features/firm/presentation/cubit/add_firm_cubit.dart';
+import 'package:new_billing/features/firm/presentation/cubit/delete_firm_cubit.dart';
+import 'package:new_billing/features/firm/presentation/cubit/fetch_firm_cubit.dart';
 import 'package:new_billing/features/history/data/datasource/history_local_data_source.dart';
 import 'package:new_billing/features/history/data/datasource/history_remote_data_source.dart';
 import 'package:new_billing/features/history/data/repository/history_repository_impl.dart';

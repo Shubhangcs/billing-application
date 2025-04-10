@@ -1,4 +1,4 @@
-class AppUrls{
+class AppUrls {
   static const String url = "https://apmc.http.vithsutra.com";
   static const String login = "$url/login";
   static const String register = "$url/create/user";
@@ -18,4 +18,7 @@ class AppUrls{
   static const String addBank = "$url/create/banker";
   static const String getBank = "$url/get/bankers";
   static const String deleteBank = "$url/delete/banker";
+  static const String addBiller = "$url/create/biller";
+  static const String deleteBiller = "$url/delete/biller";
+  static const String getBiller = "$url/get/billers";
 }

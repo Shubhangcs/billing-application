@@ -16,6 +16,9 @@ import 'package:new_billing/features/billing/pages/product_page.dart';
 import 'package:new_billing/features/customer/presentation/cubit/add_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/cubit/delete_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/cubit/fetch_customer_cubit.dart';
+import 'package:new_billing/features/firm/presentation/cubit/add_firm_cubit.dart';
+import 'package:new_billing/features/firm/presentation/cubit/delete_firm_cubit.dart';
+import 'package:new_billing/features/firm/presentation/cubit/fetch_firm_cubit.dart';
 import 'package:new_billing/features/firm/presentation/pages/firm_page.dart';
 import 'package:new_billing/features/history/presentation/bloc/history_bloc.dart';
 import 'package:new_billing/features/history/presentation/cubit/delete_invoice_cubit.dart';
@@ -169,7 +172,20 @@ class Routes {
         );
       case firms:
         return MaterialPageRoute(
-          builder: (context) => FirmPage(),
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => serviceLocator<FetchFirmCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => serviceLocator<DeleteFirmCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => serviceLocator<AddFirmCubit>(),
+              ),
+            ],
+            child: FirmPage(),
+          ),
         );
     }
   }

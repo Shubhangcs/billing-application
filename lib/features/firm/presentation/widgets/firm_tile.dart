@@ -6,7 +6,6 @@ class FirmTile extends StatelessWidget {
   final String firmName;
   final String firmPhoneNumber;
   final String firmGstNumber;
-  final String firmState;
   final String firmAddress;
   final String firmEmail;
   final String firmPanNumber;
@@ -18,7 +17,6 @@ class FirmTile extends StatelessWidget {
     required this.onDeletePressed,
     required this.firmAddress,
     required this.firmGstNumber,
-    required this.firmState,
     required this.firmEmail,
     required this.firmPanNumber,
   });
@@ -121,25 +119,6 @@ class FirmTile extends StatelessWidget {
               Expanded(
                 child: Text(
                   firmPanNumber,
-                  style: Theme.of(context).textTheme.labelSmall,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          Row(
-            children: [
-              Text(
-                "State: ",
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              Expanded(
-                child: Text(
-                  firmState,
                   style: Theme.of(context).textTheme.labelSmall,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,

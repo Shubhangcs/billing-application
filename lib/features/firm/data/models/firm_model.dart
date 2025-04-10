@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:new_billing/features/firm/domain/entities/firm_entity.dart';
 
 class FirmModel extends FirmEntity {
@@ -23,19 +25,7 @@ class FirmModel extends FirmEntity {
       firmPan: json["biller_pan"],
       firmPhoneNumber: json["biller_mobile"],
       userId: json["user_id"],
-      firmLogo: json["biller_companylogo"],
+      firmLogo: null,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "biller_name": firmName,
-      "biller_address": firmAddress,
-      "biller_gstin": firmGstNumber,
-      "biller_mobile": firmPhoneNumber,
-      "biller_mail": firmEmail,
-      "biller_pan": firmPan,
-      "user_id": userId,
-    };
   }
 }

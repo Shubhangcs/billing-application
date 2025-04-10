@@ -9,7 +9,7 @@ class FirmEntity {
   final String firmEmail;
   final String firmPan;
   final String userId;
-  final File firmLogo;
+  final File? firmLogo;
   FirmEntity({
     required this.firmId,
     required this.firmName,

@@ -116,13 +116,6 @@ class HomePage extends StatelessWidget {
                       icon: Icons.history,
                       cardName: "History",
                     ),
-                    GridCard(
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/settings");
-                      },
-                      icon: Icons.settings_outlined,
-                      cardName: "Settings",
-                    ),
                   ],
                 ),
               ],
