@@ -8,11 +8,11 @@ import 'package:new_billing/features/bank/presentation/cubit/add_bank_cubit.dart
 import 'package:new_billing/features/bank/presentation/cubit/delete_bank_cubit.dart';
 import 'package:new_billing/features/bank/presentation/cubit/fetch_bank_cubit.dart';
 import 'package:new_billing/features/bank/presentation/pages/bank_page.dart';
-import 'package:new_billing/features/billing/bloc/invoice_bloc.dart';
-import 'package:new_billing/features/billing/bloc/invoice_details_bloc.dart';
-import 'package:new_billing/features/billing/bloc/products_bloc.dart';
-import 'package:new_billing/features/billing/pages/billing_page.dart';
-import 'package:new_billing/features/billing/pages/product_page.dart';
+import 'package:new_billing/features/billing/presentation/bloc/invoice_bloc.dart';
+import 'package:new_billing/features/billing/presentation/bloc/invoice_details_bloc.dart';
+import 'package:new_billing/features/billing/presentation/bloc/products_bloc.dart';
+import 'package:new_billing/features/billing/presentation/pages/billing_page.dart';
+import 'package:new_billing/features/billing/presentation/pages/product_page.dart';
 import 'package:new_billing/features/customer/presentation/cubit/add_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/cubit/delete_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/cubit/fetch_customer_cubit.dart';
@@ -24,7 +24,8 @@ import 'package:new_billing/features/history/presentation/bloc/history_bloc.dart
 import 'package:new_billing/features/history/presentation/cubit/delete_invoice_cubit.dart';
 import 'package:new_billing/features/history/presentation/cubit/payment_status_updater_cubit.dart';
 import 'package:new_billing/features/history/presentation/pages/history_page.dart';
-import 'package:new_billing/features/home/pages/home.dart';
+import 'package:new_billing/features/home/presentation/cubit/logout_cubit_cubit.dart';
+import 'package:new_billing/features/home/presentation/pages/home.dart';
 import 'package:new_billing/features/customer/presentation/pages/customer_page.dart';
 import 'package:new_billing/features/logistic/presentation/cubit/add_logistic_cubit.dart';
 import 'package:new_billing/features/logistic/presentation/cubit/delete_logistic_cubit.dart';
@@ -91,7 +92,10 @@ class Routes {
 
       case home:
         return MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) => BlocProvider(
+            create: (context) => serviceLocator<LogoutCubitCubit>(),
+            child: HomePage(),
+          ),
         );
 
       case billing:

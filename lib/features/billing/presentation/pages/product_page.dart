@@ -9,7 +9,7 @@ import 'package:new_billing/core/common/widgets/drop_down.dart';
 import 'package:new_billing/core/common/widgets/elevated_button.dart';
 import 'package:new_billing/core/common/widgets/text_field.dart';
 import 'package:new_billing/core/themes/colors.dart';
-import 'package:new_billing/features/billing/bloc/products_bloc.dart';
+import 'package:new_billing/features/billing/presentation/bloc/products_bloc.dart';
 import 'package:new_billing/features/pdf_viev/page/pdf_view_page.dart';
 
 class ProductPage extends StatefulWidget {

@@ -30,11 +30,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         password: event.password,
       ),
     );
-    response.fold((failure) {
-      emit(AuthFailureState(message: failure.message));
-    }, (success) {
-      emit(AuthSuccessState(message: success));
-    });
+    response.fold(
+      (failure) {
+        emit(
+          AuthFailureState(
+            message: failure.message,
+          ),
+        );
+      },
+      (success) {
+        emit(
+          AuthSuccessState(
+            message: success,
+          ),
+        );
+      },
+    );
   }
 
   Future<void> _authRegister(
@@ -49,18 +60,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         password: event.password,
       ),
     );
-    response.fold((failure) {
-      emit(
-        AuthFailureState(
-          message: failure.message,
-        ),
-      );
-    }, (success) {
-      emit(
-        AuthSuccessState(
-          message: success,
-        ),
-      );
-    });
+    response.fold(
+      (failure) {
+        emit(
+          AuthFailureState(
+            message: failure.message,
+          ),
+        );
+      },
+      (success) {
+        emit(
+          AuthSuccessState(
+            message: success,
+          ),
+        );
+      },
+    );
   }
 }

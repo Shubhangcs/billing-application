@@ -1,9 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_billing/core/themes/colors.dart';
-import 'package:new_billing/features/home/widgets/grid_card.dart';
+import 'package:new_billing/core/widgets/app_snack_bar.dart';
+import 'package:new_billing/features/home/presentation/cubit/logout_cubit_cubit.dart';
+import 'package:new_billing/features/home/presentation/widgets/grid_card.dart';
+import 'package:new_billing/features/home/presentation/widgets/logout_dialog.dart';
+import 'package:new_billing/init_dependencies.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  void _showLogoutDialog() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => BlocProvider(
+        create: (context) => serviceLocator<LogoutCubitCubit>(),
+        child: BlocConsumer<LogoutCubitCubit, LogoutCubitState>(
+          listener: (context, state) {
+            if (state is LogoutSuccessState) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/login',
+                (Route<dynamic> route) => false,
+              );
+            }
+            if (state is LogoutFailureState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                AppSnackBar(message: "Logout Unsuccessfull.").build(context),
+              );
+            }
+          },
+          builder: (context, state) {
+            return AppLogoutConfirmationBottomSheet(
+              onLogoutPressed: () {
+                BlocProvider.of<LogoutCubitCubit>(context).logout();
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +53,16 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         leading: Icon(Icons.home),
         title: Text("Home"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _showLogoutDialog();
+            },
+            icon: Icon(
+              Icons.logout,
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -46,25 +98,30 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 200,
-                  child: Card(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.receipt_long_rounded,
-                            color: AppColors.blue,
-                            size: 80,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "Generate Invoice",
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ],
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, "/billing");
+                    },
+                    child: Card(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.receipt_long_rounded,
+                              color: AppColors.blue,
+                              size: 80,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Generate Invoice",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -106,7 +163,7 @@ class HomePage extends StatelessWidget {
                       onPressed: () {
                         Navigator.pushNamed(context, "/banks");
                       },
-                      icon: Icons.currency_rupee_rounded,
+                      icon: Icons.currency_rupee,
                       cardName: "Bank",
                     ),
                     GridCard(

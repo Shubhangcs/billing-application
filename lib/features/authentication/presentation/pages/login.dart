@@ -147,8 +147,8 @@ class _LoginPageState extends State<LoginPage> {
                             if (_formKey.currentState!.validate()) {
                               BlocProvider.of<AuthBloc>(context).add(
                                 AuthLoginEvent(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
+                                  email: _emailController.text.trim(),
+                                  password: _passwordController.text.trim(),
                                 ),
                               );
                             }

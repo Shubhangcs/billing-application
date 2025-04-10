@@ -10,6 +10,7 @@ Future<void> initDependancies() async {
   _initCustomer();
   _initBank();
   _initFirm();
+  _initHome();
   serviceLocator.registerLazySingleton(() => Connection());
   serviceLocator.registerLazySingleton(() => http.Client());
 }
@@ -311,6 +312,30 @@ void _initFirm() {
     ..registerFactory(
       () => AddFirmCubit(
         addFirmUsecase: serviceLocator(),
+      ),
+    );
+}
+
+void _initHome() {
+  serviceLocator
+    ..registerFactory<HomeLocalDatasource>(
+      () => HomeLocalDatasourceImpl(
+        box: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton<HomeRepository>(
+      () => HomeRepositoryImpl(
+        homeLocalDatasource: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => LogoutUsecase(
+        homeRepository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => LogoutCubitCubit(
+        logoutUsecase: serviceLocator(),
       ),
     );
 }

@@ -33,7 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
     } on LocalStorageException catch (e) {
       return Left(Failure(message: e.message));
     } catch (e) {
-      return Left(Failure(message: "Exception while Processing the Request."));
+      return Left(Failure(message: "Exception While Processing The Request."));
     }
   }
 
@@ -58,7 +58,7 @@ class AuthRepositoryImpl implements AuthRepository {
     } on LocalStorageException catch (e) {
       return Left(Failure(message: e.message));
     } catch (e) {
-      return Left(Failure(message: "Exception while Processing the Request."));
+      return Left(Failure(message: "Exception While Processing The Request."));
     }
   }
 
@@ -68,7 +68,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final token = authLocalDataSource.autoLogin();
       return Right(token);
     } catch (e) {
-      return Left(Failure(message: "Exception while Processing the Request."));
+      return Left(Failure(message: "Exception While Processing The Request."));
     }
   }
 }

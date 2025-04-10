@@ -20,7 +20,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<String> login({required LoginModel loginDetails}) async {
     try {
       if (!await connection.checkConnection()) {
-        throw ServerException(message: "Internet Is Not Connected.");
+        throw ServerException(message: "Not Connected To Internet.");
       }
       final jsonResponse = await client.post(
         Uri.parse(AppUrls.login),
@@ -36,7 +36,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw ServerException(message: e.message);
     } catch (e) {
       throw ServerException(
-        message: "Exception while Communicating with the Server.",
+        message: "Exception While Communicating With The Server.",
       );
     }
   }
@@ -45,7 +45,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<String> register({required RegisterModel registerDetails}) async {
     try {
       if (!await connection.checkConnection()) {
-        throw ServerException(message: "Internet Is Not Connected.");
+        throw ServerException(message: "Not Connected To Internet.");
       }
       final jsonResponse = await client.post(
         Uri.parse(AppUrls.register),
@@ -61,7 +61,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw ServerException(message: e.message);
     } catch (e) {
       throw ServerException(
-        message: "Exception while Communicating with the Server.",
+        message: "Exception While Communicating With The Server.",
       );
     }
   }
