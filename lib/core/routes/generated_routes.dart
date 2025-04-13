@@ -12,7 +12,6 @@ import 'package:new_billing/features/billing/presentation/bloc/invoice_bloc.dart
 import 'package:new_billing/features/billing/presentation/bloc/invoice_details_bloc.dart';
 import 'package:new_billing/features/billing/presentation/bloc/products_bloc.dart';
 import 'package:new_billing/features/billing/presentation/pages/billing_page.dart';
-import 'package:new_billing/features/billing/presentation/pages/product_page.dart';
 import 'package:new_billing/features/customer/presentation/cubit/add_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/cubit/delete_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/cubit/fetch_customer_cubit.dart';
@@ -31,6 +30,7 @@ import 'package:new_billing/features/logistic/presentation/cubit/add_logistic_cu
 import 'package:new_billing/features/logistic/presentation/cubit/delete_logistic_cubit.dart';
 import 'package:new_billing/features/logistic/presentation/cubit/fetch_logistic_cubit.dart';
 import 'package:new_billing/features/logistic/presentation/pages/logistics_page.dart';
+import 'package:new_billing/features/products/presentation/pages/products_page.dart';
 import 'package:new_billing/features/splash/presentation/page/splash_screen.dart';
 import 'package:new_billing/init_dependencies.dart';
 
@@ -117,7 +117,7 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
             create: (context) => ProductsBloc(),
-            child: ProductPage(),
+            child: ProductsPage(),
           ),
         );
 

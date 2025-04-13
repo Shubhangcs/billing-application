@@ -11,6 +11,7 @@ Future<void> initDependancies() async {
   _initBank();
   _initFirm();
   _initHome();
+  _initProduct();
   serviceLocator.registerLazySingleton(() => Connection());
   serviceLocator.registerLazySingleton(() => http.Client());
 }
@@ -336,6 +337,55 @@ void _initHome() {
     ..registerFactory(
       () => LogoutCubitCubit(
         logoutUsecase: serviceLocator(),
+      ),
+    );
+}
+
+void _initProduct() {
+  serviceLocator
+    ..registerFactory<ProductRemoteDatasource>(
+      () => ProductRemoteDatasourceImpl(
+        client: serviceLocator(),
+        connection: serviceLocator(),
+      ),
+    )
+    ..registerFactory<ProductLocalDatasource>(() => ProductLocalDatasourceImpl(
+          box: serviceLocator(),
+        ))
+    ..registerLazySingleton<ProductRepository>(
+      () => ProductRepositoryImpl(
+        productLocalDatasource: serviceLocator(),
+        productRemoteDatasource: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => FetchProductUsecase(
+        productRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => DeleteProductUsecase(
+        productRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => AddProductUsecase(
+        productRepository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => FetchProductCubit(
+        fetchProductUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => DeleteProductCubit(
+        deleteProductUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => AddProductCubit(
+        addProductUsecase: serviceLocator(),
       ),
     );
 }

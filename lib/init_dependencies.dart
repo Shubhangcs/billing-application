@@ -65,6 +65,16 @@ import 'package:new_billing/features/logistic/domain/usecases/fetch_logistic_use
 import 'package:new_billing/features/logistic/presentation/cubit/add_logistic_cubit.dart';
 import 'package:new_billing/features/logistic/presentation/cubit/delete_logistic_cubit.dart';
 import 'package:new_billing/features/logistic/presentation/cubit/fetch_logistic_cubit.dart';
+import 'package:new_billing/features/products/data/datasource/product_local_datasource.dart';
+import 'package:new_billing/features/products/data/datasource/product_remote_datasource.dart';
+import 'package:new_billing/features/products/data/repository/product_repository_impl.dart';
+import 'package:new_billing/features/products/domain/repository/product_repository.dart';
+import 'package:new_billing/features/products/domain/usecases/add_product_usecase.dart';
+import 'package:new_billing/features/products/domain/usecases/delete_product_usecase.dart';
+import 'package:new_billing/features/products/domain/usecases/fetch_product_usecase.dart';
+import 'package:new_billing/features/products/presentation/cubit/add_product_cubit.dart';
+import 'package:new_billing/features/products/presentation/cubit/delete_product_cubit.dart';
+import 'package:new_billing/features/products/presentation/cubit/fetch_product_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
