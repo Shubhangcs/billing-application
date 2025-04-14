@@ -66,7 +66,7 @@ class HistoryRemoteDataSourceImpl implements HistoryRemoteDataSource {
       if (jsonResponse.statusCode != 200) {
         throw ServerException(message: response["message"]);
       }
-      return response;
+      return response["message"];
     } on ServerException catch (e) {
       throw ServerException(message: e.message);
     } catch (e) {

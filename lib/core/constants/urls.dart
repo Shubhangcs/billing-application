@@ -21,4 +21,6 @@ class AppUrls {
   static const String addBiller = "$url/create/biller";
   static const String deleteBiller = "$url/delete/biller";
   static const String getBiller = "$url/get/billers";
+  static const String generateInvoice = "$url/create/invoice";
+  static const String deleteProducts = "$url/delete/product";
 }

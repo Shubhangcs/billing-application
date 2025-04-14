@@ -12,6 +12,7 @@ Future<void> initDependancies() async {
   _initFirm();
   _initHome();
   _initProduct();
+  _initBilling();
   serviceLocator.registerLazySingleton(() => Connection());
   serviceLocator.registerLazySingleton(() => http.Client());
 }
@@ -387,5 +388,72 @@ void _initProduct() {
       () => AddProductCubit(
         addProductUsecase: serviceLocator(),
       ),
+    );
+}
+
+void _initBilling() {
+  serviceLocator
+    ..registerFactory<BillingRemoteDatasource>(
+      () => BillingRemoteDatasourceImpl(
+        client: serviceLocator(),
+        connection: serviceLocator(),
+      ),
+    )
+    ..registerFactory<BillingLocalDatasource>(() => BillingLocalDatasourceImpl(
+          box: serviceLocator(),
+        ))
+    ..registerLazySingleton<BillingRepository>(
+      () => BillingRepositoryImpl(
+        billingLocalDatasource: serviceLocator(),
+        billingRemoteDatasource: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => FetchCustomerUsecases(
+        billingRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => FetchLogisticsUsecases(
+        billingRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => FetchFirmsUsecases(
+        billingRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => FetchBanksUsecases(
+        billingRepository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => SubmitInvoiceUsecases(
+        billingRepository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => FetchFirmCubits(
+        fetchFirmsUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => FetchCustomerCubits(
+        fetchCustomerUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => FetchBankCubits(
+        fetchBankUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => FetchLogisticCubits(
+        fetchLogisticsUsecase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => SubmitInvoiceCubit(submitInvoiceUsecase: serviceLocator()),
     );
 }

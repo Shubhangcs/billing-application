@@ -6,7 +6,8 @@ abstract interface class BillingRepository {
   Future<Either<Failure, List<DropDownElements>>> fetchFirm();
   Future<Either<Failure, List<DropDownElements>>> fetchLogistic();
   Future<Either<Failure, List<DropDownElements>>> fetchCustomer();
-  Future<Either<Failure, List<DropDownElements>>> submitInvoice({
+  Future<Either<Failure, List<DropDownElements>>> fetchBanks();
+  Future<Either<Failure, String>> submitInvoice({
     required String billNo,
     required String billName,
     required String stateCode,
@@ -19,5 +20,6 @@ abstract interface class BillingRepository {
     required String firmId,
     required String logisticId,
     required String customerId,
+    required String bankId,
   });
 }

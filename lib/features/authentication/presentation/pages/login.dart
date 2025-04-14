@@ -127,18 +127,6 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: 10,
                     ),
-                    Align(
-                      alignment: Alignment(1, 0),
-                      child: Text(
-                        "Forgot Password?",
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                              color: AppColors.blue,
-                            ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
                     BlocBuilder<AuthBloc, AuthState>(
                       builder: (context, state) {
                         return AppFilledButton(

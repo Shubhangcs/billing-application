@@ -32,7 +32,7 @@ class ProductModel extends ProductEntity {
       "product_qty": productQuantity,
       "product_unit": productUnit,
       "product_rate": productRate,
-      "incoice_id": invoiceId,
+      "invoice_id": invoiceId,
     };
   }
 }

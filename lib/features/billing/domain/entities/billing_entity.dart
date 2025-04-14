@@ -11,6 +11,7 @@ class BillingEntity {
   final String firm;
   final String logistic;
   final String customer;
+  final String bankId;
   final String userId;
 
   BillingEntity({
@@ -27,5 +28,6 @@ class BillingEntity {
     required this.stateCode,
     required this.vehicleNumber,
     required this.userId,
+    required this.bankId,
   });
 }

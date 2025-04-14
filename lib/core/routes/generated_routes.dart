@@ -8,9 +8,12 @@ import 'package:new_billing/features/bank/presentation/cubit/add_bank_cubit.dart
 import 'package:new_billing/features/bank/presentation/cubit/delete_bank_cubit.dart';
 import 'package:new_billing/features/bank/presentation/cubit/fetch_bank_cubit.dart';
 import 'package:new_billing/features/bank/presentation/pages/bank_page.dart';
-import 'package:new_billing/features/billing/presentation/bloc/invoice_bloc.dart';
-import 'package:new_billing/features/billing/presentation/bloc/invoice_details_bloc.dart';
-import 'package:new_billing/features/billing/presentation/bloc/products_bloc.dart';
+import 'package:new_billing/features/billing/domain/usecases/submit_invoice_usecase.dart';
+import 'package:new_billing/features/billing/presentation/cubit/fetch_bank_cubit.dart';
+import 'package:new_billing/features/billing/presentation/cubit/fetch_customer_cubit.dart';
+import 'package:new_billing/features/billing/presentation/cubit/fetch_firm_cubit.dart';
+import 'package:new_billing/features/billing/presentation/cubit/fetch_logistic_cubit.dart';
+import 'package:new_billing/features/billing/presentation/cubit/submit_invoice_cubit.dart';
 import 'package:new_billing/features/billing/presentation/pages/billing_page.dart';
 import 'package:new_billing/features/customer/presentation/cubit/add_customer_cubit.dart';
 import 'package:new_billing/features/customer/presentation/cubit/delete_customer_cubit.dart';
@@ -30,6 +33,9 @@ import 'package:new_billing/features/logistic/presentation/cubit/add_logistic_cu
 import 'package:new_billing/features/logistic/presentation/cubit/delete_logistic_cubit.dart';
 import 'package:new_billing/features/logistic/presentation/cubit/fetch_logistic_cubit.dart';
 import 'package:new_billing/features/logistic/presentation/pages/logistics_page.dart';
+import 'package:new_billing/features/products/presentation/cubit/add_product_cubit.dart';
+import 'package:new_billing/features/products/presentation/cubit/delete_product_cubit.dart';
+import 'package:new_billing/features/products/presentation/cubit/fetch_product_cubit.dart';
 import 'package:new_billing/features/products/presentation/pages/products_page.dart';
 import 'package:new_billing/features/splash/presentation/page/splash_screen.dart';
 import 'package:new_billing/init_dependencies.dart';
@@ -103,10 +109,19 @@ class Routes {
           builder: (context) => MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => InvoiceBloc(),
+                create: (context) => serviceLocator<FetchBankCubits>(),
               ),
               BlocProvider(
-                create: (context) => InvoiceDetailsBloc(),
+                create: (context) => serviceLocator<FetchLogisticCubits>(),
+              ),
+              BlocProvider(
+                create: (context) => serviceLocator<FetchCustomerCubits>(),
+              ),
+              BlocProvider(
+                create: (context) => serviceLocator<FetchFirmCubits>(),
+              ),
+              BlocProvider(
+                create: (context) => serviceLocator<SubmitInvoiceCubit>(),
               ),
             ],
             child: BillingPage(),
@@ -115,8 +130,15 @@ class Routes {
 
       case products:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => ProductsBloc(),
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                  create: (context) => serviceLocator<FetchProductCubit>()),
+              BlocProvider(
+                  create: (context) => serviceLocator<DeleteProductCubit>()),
+              BlocProvider(
+                  create: (context) => serviceLocator<AddProductCubit>()),
+            ],
             child: ProductsPage(),
           ),
         );

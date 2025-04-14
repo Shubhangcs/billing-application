@@ -15,6 +15,7 @@ class BillingModel extends BillingEntity {
     required super.stateCode,
     required super.vehicleNumber,
     required super.userId,
+    required super.bankId,
   });
 
   Map<String, dynamic> toJson() {
@@ -32,6 +33,7 @@ class BillingModel extends BillingEntity {
       "user_id": userId,
       "receiver_id": customer,
       "biller_id": firm,
+      "bank_id": bankId,
       "consignee_id": logistic,
     };
   }

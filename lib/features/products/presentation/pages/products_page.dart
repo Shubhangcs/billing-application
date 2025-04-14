@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:new_billing/core/widgets/app_delete_confirmation_bottom_sheet.dart';
 import 'package:new_billing/core/widgets/app_dropdown.dart';
 import 'package:new_billing/core/widgets/app_empty_widget.dart';
 import 'package:new_billing/core/widgets/app_error_widget.dart';
 import 'package:new_billing/core/widgets/app_snack_bar.dart';
+import 'package:new_billing/features/pdf_viev/page/pdf_view_page.dart';
 import 'package:new_billing/features/products/presentation/cubit/add_product_cubit.dart';
 import 'package:new_billing/features/products/presentation/cubit/delete_product_cubit.dart';
 import 'package:new_billing/features/products/presentation/cubit/fetch_product_cubit.dart';
@@ -28,10 +30,12 @@ class _ProductsPageState extends State<ProductsPage> {
   final TextEditingController _productHSNSACController =
       TextEditingController();
   final TextEditingController _productUnitController = TextEditingController();
+  String? invoiceId;
 
   @override
   void initState() {
     _fetchProducts();
+    getInvoiceId();
     super.initState();
   }
 
@@ -59,6 +63,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
   void _showAddProductsForm() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (context) => BlocProvider(
         create: (context) => serviceLocator<AddProductCubit>(),
@@ -117,6 +122,11 @@ class _ProductsPageState extends State<ProductsPage> {
     );
   }
 
+  Future<void> getInvoiceId() async {
+    final box = serviceLocator<Box<String>>().get("invoice_id");
+    invoiceId = box;
+  }
+
   void _showDeleteDialog({
     required String title,
     required String subtitle,
@@ -163,6 +173,24 @@ class _ProductsPageState extends State<ProductsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Products"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PDFScreen(
+                    pdfUrl:
+                        "https://apmc.http.vithsutra.com/download/invoice/$invoiceId",
+                  ),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.arrow_forward_ios_rounded,
+            ),
+          ),
+        ],
       ),
       body: BlocBuilder<FetchProductCubit, FetchProductState>(
         builder: (context, state) {

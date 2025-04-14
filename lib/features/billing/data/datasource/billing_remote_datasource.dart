@@ -156,13 +156,13 @@ class BillingRemoteDatasourceImpl implements BillingRemoteDatasource {
         );
       }
       final jsonResponse = await http.post(
-        Uri.parse(""),
-        body: billingDetails.toJson(),
+        Uri.parse(AppUrls.createInvoice),
+        body: jsonEncode(billingDetails.toJson()),
         headers: {"Content-Type": "application/json"},
       );
       final response = jsonDecode(jsonResponse.body);
       if (jsonResponse.statusCode != 200) {
-        return response["message"];
+        throw ServerException(message: response["message"]);
       }
       return response["invoice_id"];
     } on ServerException catch (e) {

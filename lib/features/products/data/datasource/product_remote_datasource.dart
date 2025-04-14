@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:new_billing/core/constants/urls.dart';
 import 'package:new_billing/core/failures/exceptions.dart';
 import 'package:new_billing/core/utils/connection/connection.dart';
 import 'package:new_billing/features/products/data/models/product_model.dart';
@@ -31,8 +32,8 @@ class ProductRemoteDatasourceImpl implements ProductRemoteDatasource {
         throw ServerException(message: "Not Connected To Internet.");
       }
       final jsonResponse = await client.post(
-        Uri.parse(""),
-        body: productDetails.toJson(),
+        Uri.parse(AppUrls.addProducts),
+        body: jsonEncode(productDetails.toJson()),
         headers: {"Content-Type": "application/json"},
       );
       final response = jsonDecode(jsonResponse.body);
@@ -56,7 +57,7 @@ class ProductRemoteDatasourceImpl implements ProductRemoteDatasource {
         throw ServerException(message: "Not Connected To Internet.");
       }
       final jsonResponse = await client.delete(
-        Uri.parse(""),
+        Uri.parse("${AppUrls.deleteProducts}/$productId"),
         headers: {"Content-Type": "application/json"},
       );
       final response = jsonDecode(jsonResponse.body);
@@ -80,17 +81,18 @@ class ProductRemoteDatasourceImpl implements ProductRemoteDatasource {
         throw ServerException(message: "Not Connected To Internet.");
       }
       final jsonResponse = await client.get(
-        Uri.parse(""),
+        Uri.parse("${AppUrls.getProducts}/$invoiceId"),
         headers: {"Content-Type": "application/json"},
       );
       final response = jsonDecode(jsonResponse.body);
+      print(response);
       if (jsonResponse.statusCode != 200) {
         throw ServerException(message: response["message"]);
       }
-      if (response["reciver_details"] == null) {
+      if (response["receiver_details"] == null) {
         return <ProductModel>[];
       }
-      final List<ProductModel> products = (response["reciver_details"] as List)
+      final List<ProductModel> products = (response["receiver_details"] as List)
           .map((ele) => ProductModel.fromJson(ele))
           .toList();
       return products;
